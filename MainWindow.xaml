@@ -5,8 +5,30 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LibrarySystem"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
-    </Grid>
+        Title="Welcome Page" Height="800" Width="1200" ResizeMode="CanResizeWithGrip"
+        AllowsTransparency="True"
+        WindowStyle="None"
+        Background="Transparent"
+        WindowStartupLocation="CenterScreen">
+    <Border Background="#F4F0ED" BorderBrush="#3B3B3B"  BorderThickness="1" CornerRadius="20">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="140"/>
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Border Grid.Row="0" BorderBrush="#3B3B3B" BorderThickness="0,0,0,1" CornerRadius="20,20,0,0">
+                <Border.Background>
+                    <ImageBrush ImageSource="Images/background.jpg" Stretch="UniformToFill"/>
+                </Border.Background>
+            </Border>
+            <TextBlock x:Name="LableWelcomePage" Text="Welcome to the Library Management System" FontFamily="Calibri" FontSize="46" HorizontalAlignment="Center" Margin="0,100,0,0" VerticalAlignment="Top" Foreground="#B7410E" Grid.Row="1" />
+            <TextBlock x:Name="TextBlockHomeUser" Text="If you are a general user and would like to access your account to borrow or return books please enter your unique library number which starts with a 'U'." 
+                       FontFamily="Calibri" FontSize="18" HorizontalAlignment="Center" Margin="0,240,0,0" VerticalAlignment="Top" Foreground="#3B3B3B" Grid.Row="1" Width="618" Height="59" TextWrapping="Wrap"/>
+            <TextBlock x:Name="TextBlockHomeAdmin" Text="If you are an administrator and would like to manage the library system, please enter your unique staff ID which begins with an 'L'." 
+                        FontFamily="Calibri" FontSize="18" HorizontalAlignment="Center" Margin="0,299,0,0" VerticalAlignment="Top" Foreground="#3B3B3B" Grid.Row="1" Width="617" Height="59" TextWrapping="Wrap"/>
+            <TextBox x:Name="TextBoxHome" Grid.Row="1" FontSize="18" FontFamily="Calibri" Foreground="#3B3B3B" HorizontalAlignment="Center" Margin="0,404,0,102"  TextWrapping="Wrap" Width="502" Height="59" />
+            <Button x:Name="ButtonHomeEnter" Grid.Row="1" FontSize="22" FontWeight="Bold" FontFamily="Calibri" Foreground="#3B3B3B" Content="ENTER" HorizontalAlignment="Center" VerticalAlignment="Top" 
+                    Width="174" Height="52" Click="OnEnterButtonClick" RenderTransformOrigin="0.42,3.367" Margin="0,511,0,0" />
+        </Grid>
+    </Border>
 </Window>
