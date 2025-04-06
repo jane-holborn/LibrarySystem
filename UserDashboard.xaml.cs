@@ -115,14 +115,33 @@ namespace LibrarySystem
         // This button click event is used to view the list of books currently on loan.
         private void ButtonViewBorrowedBooks_Click(object sender, RoutedEventArgs e)
         {
+            Library.GetInstance().GetBookController().CheckForOverdueBooks();
+
+            double fineAmount = 0.00;
             User currentUser = Library.GetInstance().GetUserController().GetCurrentUser();
             List<Book> BorrowedBooks = currentUser.GetBorrowedBooks();
 
-            if (BorrowedBooks.Count > 0)
+            foreach (Book book in BorrowedBooks)
+            {
+                if (book.AccessToAvailabilityStatus == Book.BookState.Overdue)
+                {
+                    fineAmount += 2.00;
+                }
+            }
+
+            currentUser.setFine(fineAmount);
+                    
+            if (BorrowedBooks.Count > 0 && currentUser.AccessToFine > 0)
             {
                 ListBoxBooks.ItemsSource = BorrowedBooks;
                 TextBoxSearch.Text = null;
-                TextBlockStatus.Text = "The books you currently have on loan, and their due dates, are listed above";
+                TextBlockStatus.Text = $"The books you currently have on loan, and their due dates, are listed above. You have outstanding fines to the sum of ${currentUser.AccessToFine}.";
+            }
+            else if (BorrowedBooks.Count > 0 && currentUser.AccessToFine == 0)
+            {
+                ListBoxBooks.ItemsSource = BorrowedBooks;
+                TextBoxSearch.Text = null;
+                TextBlockStatus.Text = "The books you currently have on loan, and their due dates, are listed above.";
             }
             else
             {
@@ -150,12 +169,14 @@ namespace LibrarySystem
                 }
                 else
                 {
+                    ListBoxBooks.ItemsSource = null;
                     TextBoxSearch.Text = null;
                     TextBlockStatus.Text = "The selected book is unavailable in the system. Please select another book or try again later.";
                 }
             }
             else
             {
+                ListBoxBooks.ItemsSource = null;
                 TextBoxSearch.Text = null;
                 TextBlockStatus.Text = "To return a book, click 'View click 'Borrowed Books' and select a book you wish to return.";
             }
