@@ -14,35 +14,39 @@ using System.Windows.Shapes;
 namespace LibrarySystem
 {
     public partial class MainWindow : Window
-    {
-
-        Library rockinghamLibrary = Library.getInstance();
+    {        
+        Library rockinghamLibrary = Library.GetInstance();
 
         public MainWindow()
         {
             InitializeComponent();
-            rockinghamLibrary.getLibrarianController().PrePopulateLibrarians();
-            rockinghamLibrary.getUserController().PrePopulateUsers();
-            rockinghamLibrary.getBookController().PrePopulateBooks();
+            rockinghamLibrary.GetLibrarianController().PrePopulateLibrarians();
+            rockinghamLibrary.GetUserController().PrePopulateUsers();
+            rockinghamLibrary.GetBookController().PrePopulateBooks();
         }
 
         // This method checks for a valid number of a user or librarian already in the system and redirects to the appropriate dashboard.
         private void OnEnterButtonClick(object sender, RoutedEventArgs e)
         {
             string enteredId = TextBoxHome.Text;
+            TextBoxHome.Clear();
 
             if (string.IsNullOrEmpty(enteredId))
             {
                 MessageBox.Show("Please enter a valid ID number.", "Login Unsucessful", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
-            else if(Library.getInstance().getLibrarianController().CheckLibrarianStaffId(enteredId))
+            else if(Library.GetInstance().GetLibrarianController().CheckLibrarianStaffId(enteredId))
             {
+                Librarian loggedinLibrarian = Library.GetInstance().GetLibrarianController().GetLibrarianByStaffId(enteredId);
+                Library.GetInstance().GetLibrarianController().SetCurrentLibrarian(loggedinLibrarian);
                 MessageBox.Show("Login successful, press Ok to continue.", "Login Successful", MessageBoxButton.OK, MessageBoxImage.Information);
                 NavigateToLibrarianDashboard();
             }
-            else if (Library.getInstance().getUserController().CheckUserLibraryNumber(enteredId))
+            else if (Library.GetInstance().GetUserController().CheckUserLibraryNumber(enteredId))
             {
+                User loggedInUser = Library.GetInstance().GetUserController().GetUserByLibraryNumber(enteredId);
+                Library.GetInstance().GetUserController().SetCurrentUser(loggedInUser);
                 MessageBox.Show("Login successful, press Ok to continue.", "Login Successful", MessageBoxButton.OK, MessageBoxImage.Information);
                 NavigateToUserDashboard();
             }
@@ -52,24 +56,26 @@ namespace LibrarySystem
             }
         }
 
-        // This method navigates to the Librarian dashboard if as Librarian Staff ID is detected
+        // This method navigates to the Librarian dashboard if a Librarian Staff ID is detected.
+        // It also keeps the current instance of the main windwow and hides it, to allow it to be accessed again when logging out.
         public void NavigateToLibrarianDashboard()
         {
-            LibrarianDashboard librarianDashboard = new LibrarianDashboard(Library.getInstance());
+            LibrarianDashboard librarianDashboard = new LibrarianDashboard(Library.GetInstance(), this);
             librarianDashboard.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             librarianDashboard.Show();
            
-            this.Hide(); // https://stackoverflow.com/questions/21376552/close-window-after-open-another-window ask Blake about using the 'this' keyword here.
+            Hide(); // https://stackoverflow.com/questions/21376552/close-window-after-open-another-window
         }
 
-        // This method navigates to the User dashboard if as User Library number is detected
+        // This method navigates to the User dashboard if a User Library number is detected.
+        // It also keeps the current instance of the main windwow and hides it, to allow it to be accessed again when logging out.
         public void NavigateToUserDashboard()
         {
-            UserDashboard userDashboard = new UserDashboard(Library.getInstance());
+            UserDashboard userDashboard = new UserDashboard(Library.GetInstance(), this);
             userDashboard.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             userDashboard.Show();
 
-            this.Hide(); // https://stackoverflow.com/questions/21376552/close-window-after-open-another-window ask Blake about using the 'this' keyword here.
+            Hide(); // https://stackoverflow.com/questions/21376552/close-window-after-open-another-window
         }
     }
 }
