@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using LibrarySystem.Entities;
 
 namespace LibrarySystem
 {
@@ -24,6 +25,7 @@ namespace LibrarySystem
         private string PublicationDate;
         private BookState State;
         private DateTime? DueDate;
+        private List<User>? BorrowedBy;
 
         // This constructor is used to add a new book to the library.
         public Book(string title, string author, string publicationDate, string libraryReferenceNumber)
@@ -62,6 +64,10 @@ namespace LibrarySystem
         {
             get { return DueDate; }
         }
+        public List<User>? AccessToBorrowedBy
+        {
+            get { return BorrowedBy;  }
+        }
 
         // Setter methods used to set the state of the book and the due date.
         public void SetBookStateToAvailable()
@@ -83,6 +89,14 @@ namespace LibrarySystem
         public void SetDueDate()
         { 
             DueDate = DateTime.Now.AddDays(14);
+        }
+        public void SetBorrowedBy()
+        {
+            BorrowedBy = new List<User>();
+        }
+        public void AddUserToBorrowedBy(User user)
+        {
+            BorrowedBy.Add(user);
         }
         
         // This method is used to clear the due date when returning a book.

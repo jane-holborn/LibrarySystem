@@ -14,6 +14,7 @@ namespace LibrarySystem.Controllers
         private List<Book> ListOfAllBooks = new List<Book>();
         private List<Book> ListOfBorrowedBooks = new List<Book>();
         private List<Book> ListOfOverdueBooks = new List<Book>();
+        private List<Book> ListOfLostBooks = new List<Book>();
 
         // This method is used to prepoluate the list of books when the application is launched.
         public void PrePopulateBooks()
@@ -65,7 +66,7 @@ namespace LibrarySystem.Controllers
             return booksFilteredByAuthor;
         }
 
-        // This method is used to filter books by an keywords and stores them in a new instance of a book list.
+        // This method is used to filter books by a keyword and store them in a new instance of a book list.
         public List<Book> SearchBooksByKeyword(string keyword)
         {
             List<Book> booksFilteredByKeyword = new List<Book>();
@@ -80,7 +81,7 @@ namespace LibrarySystem.Controllers
             return booksFilteredByKeyword;
         }
 
-        // This method is used to find the users selected book in the library system book list.
+        // This method is used to find the selected book in the library system book list.
         public Book FindBookInAllBooks(string libraryReferenceNumber)
         {
             foreach(Book book in ListOfAllBooks)
@@ -140,12 +141,37 @@ namespace LibrarySystem.Controllers
             return ListOfOverdueBooks;
         }
 
+        // This method is used to get a list of all the lost books.
+        public List<Book> GetlistOfAllLostBooks()
+        {
+            foreach (Book book in ListOfAllBooks)
+            {
+                if (book.AccessToAvailabilityStatus == Book.BookState.Lost)
+                {
+                    ListOfLostBooks.Add(book);
+                }
+            }
+            return ListOfLostBooks;
+        }
+
+        // This method is used to delete the selected book from the list of all books.
+        public void DeleteBook(Book bookToDelete)
+        {
+            ListOfAllBooks.Remove(bookToDelete);
+        }
+
+        // This method is used to add a book to the list of all books.
+        public void AddBook(string title, string author, string publicationDate, string libraryReferenceNumber)
+        {
+            ListOfAllBooks.Add(new Book(title, author,publicationDate, libraryReferenceNumber));
+        }
+
         // This method is used to check for overdue books and update the state of any books with a due date that has passed.
         public void CheckForOverdueBooks()
         {
             foreach (Book book in ListOfAllBooks)
             {
-                if(book.AccessToDueDate < DateTime.Now && book.GetBookState() == Book.BookState.Borrowed)
+                if (book.AccessToDueDate < DateTime.Now && book.GetBookState() == Book.BookState.Borrowed)
                 {
                     book.SetBookStateToOverdue();
                 }
