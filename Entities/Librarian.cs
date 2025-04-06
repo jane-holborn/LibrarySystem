@@ -13,15 +13,27 @@ namespace LibrarySystem.Entities
 
         // This constructor is used to add a new librarian, properties are inherited from the abstract 'Person' class.
         public Librarian(string staffID, string userName, string userEmail, string userLibraryNumber)
-            : base(userName, userEmail, userLibraryNumber)
+            : base(userLibraryNumber, userName, userEmail)
         {
             StaffID = staffID;
         }
 
-        // This getter are used to facilitate access to the properties.
+        // These getters are used to facilitate access to the properties.
         public string AccessLibrarianStaffId
         {
             get { return StaffID; }
+        }
+        public string AccessLibrarianUserName
+        {
+            get { return UserName; }
+        }
+        public string AccessLibrarianUserEmail
+        {
+            get { return UserEmail; }
+        }
+        public string AccessLibrarianUserLibraryNumber
+        {
+            get { return UserLibraryNumber; }
         }
     }
 }
