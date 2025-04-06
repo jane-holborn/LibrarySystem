@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using LibrarySystem.Entities;
 
 namespace LibrarySystem.Controllers
@@ -12,6 +13,7 @@ namespace LibrarySystem.Controllers
     {
         private List<Book> ListOfAllBooks = new List<Book>();
         private List<Book> ListOfBorrowedBooks = new List<Book>();
+        private List<Book> ListOfOverdueBooks = new List<Book>();
 
         // This method is used to prepoluate the list of books when the application is launched.
         public void PrePopulateBooks()
@@ -76,6 +78,78 @@ namespace LibrarySystem.Controllers
                 }
             }
             return booksFilteredByKeyword;
+        }
+
+        // This method is used to find the users selected book in the library system book list.
+        public Book FindBookInAllBooks(string libraryReferenceNumber)
+        {
+            foreach(Book book in ListOfAllBooks)
+            {
+                if (book.AccessToLibraryReferenceNumber == libraryReferenceNumber)
+                {
+                    return book;
+                }
+            }
+            return null;
+        }
+
+        // This method is used to find the users selected book in the users borrowed list.
+        public Book FindBookInUsersBorrowedlist(string libraryReferenceNubmer, User user)
+        {
+            foreach(Book book in user.GetBorrowedBooks())
+            {
+                if(book.AccessToLibraryReferenceNumber == libraryReferenceNubmer)
+                {
+                    return book;
+                }
+            }
+            return null;
+        }
+
+        // This method is used to return the list of all books.
+        public List<Book> GetListOfAllBooks()
+        {
+            return ListOfAllBooks;
+        }
+
+        // This method is used to get a list of all the borrowed books.
+        public List<Book> GetListOfAllBorrowedBooks()
+        {
+            CheckForOverdueBooks();
+            foreach (Book book in ListOfAllBooks)
+            {
+                if (book.AccessToAvailabilityStatus == Book.BookState.Borrowed)
+                {
+                    ListOfBorrowedBooks.Add(book);
+                }
+            }
+            return ListOfBorrowedBooks;
+        }
+
+        // This method is used to get a list of all the overdue books.
+        public List<Book> GetListOfAllOverdueBooks()
+        {
+            CheckForOverdueBooks();
+            foreach (Book book in ListOfAllBooks)
+            {
+                if (book.AccessToAvailabilityStatus == Book.BookState.Overdue)
+                {
+                    ListOfOverdueBooks.Add(book);
+                }
+            }
+            return ListOfOverdueBooks;
+        }
+
+        // This method is used to check for overdue books and update the state of any books with a due date that has passed.
+        public void CheckForOverdueBooks()
+        {
+            foreach (Book book in ListOfAllBooks)
+            {
+                if(book.AccessToDueDate < DateTime.Now && book.GetBookState() == Book.BookState.Borrowed)
+                {
+                    book.SetBookStateToOverdue();
+                }
+            }
         }
     }
 }

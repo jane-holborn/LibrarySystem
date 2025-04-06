@@ -35,7 +35,7 @@ namespace LibrarySystem
             State = BookState.Available;
         }
 
-        // These getters are used to facilitate access to the properties in particular for the Data Template.
+        // These getters are used to facilitate access to the properties, in particular for the Data Template.
         public string AccessToTitle
         {
             get { return Title; }
@@ -44,29 +44,63 @@ namespace LibrarySystem
         {
             get { return Author; }
         }
-
-        // Do not remove. This property is being accessed in the LibraryDashboard Data Template despite the indication of 0 references.
         public string AccessToLibraryReferenceNumber
         {
             get { return LibraryReferenceNumber; }
         }
-
+        
         // Do not remove. This property is being accessed in the UserDashboard Data Template despite the indication of 0 references.
         public string AccessToPublicationDate
         {
             get { return PublicationDate; }
         }
-
-        // Do not remove. This property is being accessed in the UserDashboard Data Template despite the indication of 0 references.
         public BookState AccessToAvailabilityStatus
         {
             get { return State; }
         }
-
-        // Do not remove. This property is being accessed in the LibraryDashboard Data Template despite the indication of 0 references.
         public DateTime? AccessToDueDate
         {
             get { return DueDate; }
+        }
+
+        // Setter methods used to set the state of the book and the due date.
+        public void SetBookStateToAvailable()
+        {
+            State = BookState.Available;
+        }
+        public void SetBookStateToBorrowed()
+        {
+            State = BookState.Borrowed;
+        }
+        public void SetBookStateToOverdue()
+        {
+            State = BookState.Overdue;
+        }
+        public void SetBookStateToLost()
+        {
+            State = BookState.Lost;
+        }
+        public void SetDueDate()
+        { 
+            DueDate = DateTime.Now.AddDays(14);
+        }
+        
+        // This method is used to clear the due date when returning a book.
+        public void ClearDueDate()
+        {
+            DueDate = null;
+        }
+
+        // This method is used to get the book state.
+        public BookState GetBookState()
+        {
+            return State;
+        }
+
+        // This method is used to test and demonstrate the Overdue functionality in the application. It is not used during normal operation.
+        public void SetDueDateToPast()
+        {
+            DueDate = DateTime.Now.AddDays(-14);
         }
     }
 }
