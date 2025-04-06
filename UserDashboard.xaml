@@ -10,7 +10,7 @@
         AllowsTransparency="True"
         WindowStyle="None"
         Background="Transparent">
-    
+
     <!-- Data Template for listbox styling -->
     <!-- https://learn.microsoft.com/en-us/dotnet/desktop/wpf/data/data-templating-overview?view=netframeworkdesktop-4.8 -->
     <Window.Resources>
@@ -21,24 +21,30 @@
                     <RowDefinition Height="Auto"></RowDefinition>
                     <RowDefinition Height="Auto"></RowDefinition>
                     <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
                 </Grid.RowDefinitions>
 
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="160"></ColumnDefinition>
+                    <ColumnDefinition Width="200"></ColumnDefinition>
                     <ColumnDefinition Width="Auto"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Row="0" Grid.Column="0" Text="Title: " FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" />
                 <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Path=AccessToTitle}" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" />
                 <TextBlock Grid.Row="1" Grid.Column="0" Text="Author: " FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" />
                 <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Path=AccessToAuthor}" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" />
-                <TextBlock Grid.Row="2" Grid.Column="0" Text="Publication Date: " FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" />
-                <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Path=AccessToPublicationDate}" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" />
-                <TextBlock Grid.Row="3" Grid.Column="0" Text="Available Status: " FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" />
-                <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Path=AccessToAvailabilityStatus}" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" />
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="Library Reference Number: " FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" />
+                <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Path=AccessToLibraryReferenceNumber}" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" />
+                <TextBlock Grid.Row="3" Grid.Column="0" Text="Publication Date: " FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" />
+                <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Path=AccessToPublicationDate}" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" />
+                <TextBlock Grid.Row="4" Grid.Column="0" Text="Available Status: " FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" />
+                <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding Path=AccessToAvailabilityStatus}" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" />
+                <TextBlock Grid.Row="5" Grid.Column="0" Text="Due Date: " FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" />
+                <TextBlock Grid.Row="5" Grid.Column="1" Text="{Binding Path=AccessToDueDate}" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" />
             </Grid>
         </DataTemplate>
     </Window.Resources>
-    
+
     <Border Background="#F4F0ED" BorderBrush="#808080"  BorderThickness="1" CornerRadius="20">
         <Grid>
             <Grid.RowDefinitions>
@@ -53,41 +59,52 @@
                     <ImageBrush ImageSource="Images/background.jpg" Stretch="UniformToFill"/>
                 </Border.Background>
             </Border>
-            
+
             <!-- User functionality -->
-            <TextBlock x:Name="TextBlockBorrowedBooks" Text="View borrowed books:"  Grid.Row="1" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" 
-                       HorizontalAlignment="Left" VerticalAlignment="Top" Margin="32,313,0,0" TextWrapping="Wrap"  />
-            <TextBlock x:Name="TextBlockBorrowBook" Text="Borrow a book:" Grid.Row="1"  FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" 
-                       HorizontalAlignment="Left" VerticalAlignment="Top" Margin="32,141,0,0" TextWrapping="Wrap"  />
             <TextBlock x:Name="TextBlockUserDashboardName" Text="User Dashboard" Grid.Row="1" FontFamily="Calibri" FontSize="34" Foreground="#B7410E" 
                        HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,48,0,0" />
+            <TextBlock x:Name="TextBlockBookManagement" Text="Manage Your Books" Grid.Row="1" FontFamily="Calibri" FontSize="22" Foreground="#3B3B3B"  
+                       HorizontalAlignment="Left" VerticalAlignment="Top" Margin="828,309,0,0" />
+            <TextBlock x:Name="TextBlockManageBooksOne" Text="Choose an action below to manage your books:" Grid.Row="1" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B"  
+                       HorizontalAlignment="Left" VerticalAlignment="Top" Margin="687,355,0,0" TextDecorations="Underline" />
+            <TextBlock x:Name="TextBlockManageBooksTwo" Text="- Borrow a book, you can borrow up to 3 books at a time." Grid.Row="1" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B"  
+                       HorizontalAlignment="Left" VerticalAlignment="Top" Margin="687,389,0,0"  />
+            <TextBlock x:Name="TextBlockManageBooksThree" Text="- Return books you've finished or if you've reached your borrowing limit." Grid.Row="1" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B"  
+                       HorizontalAlignment="Left" VerticalAlignment="Top" Margin="687,414,0,0" />
+            <TextBlock x:Name="TextBlockManageBooksFour" Text="- View your Borrowed Books to check what you currently have on loan." Grid.Row="1" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B"  
+                       HorizontalAlignment="Left" VerticalAlignment="Top" Margin="687,439,0,0" />
             <Button x:Name="ButtonBorrowBook" Content="Borrow Book" Grid.Row="1" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" 
-                    HorizontalAlignment="Left" VerticalAlignment="Top" Margin="32,172,0,0" Width="120" Height="36"/>
+                    HorizontalAlignment="Left" VerticalAlignment="Top" Margin="687,486,0,0" Width="120" Height="36" Click="ButtonBorrowBook_Click"/>
             <Button x:Name="ButtonReturnBook" Content="Return Book" Grid.Row="1" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" 
-                    HorizontalAlignment="Left" VerticalAlignment="Top" Margin="32,260,0,0" Width="120" Height="36"/>
-            <TextBlock x:Name="TextBlockSearchTitle" Text="Search by Book Title:" Grid.Row="1" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" 
-                       HorizontalAlignment="Left" VerticalAlignment="Top" Margin="32,504,0,0" />
-            <Button x:Name="ButtonSearchByTitle" Content="Search" Grid.Row="1" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" 
-                    HorizontalAlignment="Left" VerticalAlignment="Top" Margin="32,531,0,0" Width="120" Height="36" Click="ButtonSearchByTitle_Click"/>
-            <TextBlock x:Name="TextBlockSearchTitle1" Text="Search by Author:" Grid.Row="1" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" 
-                       HorizontalAlignment="Left" VerticalAlignment="Top" Margin="232,503,0,0" />
-            <Button x:Name="ButtonSearchByAuthor" Content="Search" Grid.Row="1" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" 
-                    HorizontalAlignment="Left" VerticalAlignment="Top" Margin="232,531,0,0" Width="120" Height="36" Click="ButtonSearchByAuthor_Click"/>
-            <TextBlock x:Name="TextBlockSearchTitle2" Text="Search by Keyword:" Grid.Row="1" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" 
-                       HorizontalAlignment="Left" VerticalAlignment="Top" Margin="432,504,0,0" />
-            <Button x:Name="ButtonSearchByKeyword" Content="Search" Grid.Row="1" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" 
-                    HorizontalAlignment="Left" VerticalAlignment="Top" Margin="432,531,0,0" Width="120" Height="36" Click="ButtonSearchByKeyword_Click"/>
-            <TextBlock x:Name="TextBlockSearch" Text="Type here to search..." Grid.Row="1" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" 
-                       HorizontalAlignment="Left" VerticalAlignment="Top" Margin="32,401,0,0" />
-            <TextBox x:Name="TextBoxSearch" Grid.Row="1" FontFamily="Calibri" FontSize="18" Foreground="#3B3B3B" HorizontalAlignment="Left" 
-                     VerticalAlignment="Top" Margin="32,428,0,0" Width="520" Height="36" TextWrapping="Wrap" />
-            <ListBox x:Name="ListBoxBooks" Grid.Row="1" Margin="625,154,32,96" ItemTemplate="{StaticResource BookTemplate}" HorizontalContentAlignment="Stretch" />
-            <TextBlock x:Name="TextBlockListBox" Text="View the list of books that match your search criteria here:" Grid.Row="1" FontFamily="Calibri" FontSize="16" 
-                       Foreground="#3B3B3B" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="625,129,0,0"  TextWrapping="Wrap" />
-            <Button x:Name="ButtonClearListBox" Content="CLEAR" Grid.Row="1" FontFamily="Calibri" FontSize="20" Foreground="#3B3B3B" FontWeight="Bold"
-                    HorizontalAlignment="Left" VerticalAlignment="Top" Margin="808,523,0,0" Width="174" Height="52" Click="ButtonClearListBox_Click" />
+                    HorizontalAlignment="Left" VerticalAlignment="Top" Margin="862,486,0,0" Width="120" Height="36" Click="ButtonReturnBook_Click"/>
             <Button x:Name="ButtonViewBorrowedBooks" Content="Borrowed Books" Grid.Row="1" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" 
-                    HorizontalAlignment="Left" VerticalAlignment="Top" Margin="32,340,0,0" Width="120" Height="36"/>
+                    HorizontalAlignment="Left" VerticalAlignment="Top" Margin="1038,486,0,0" Width="120" Height="36" Click="ButtonViewBorrowedBooks_Click"/>
+            <Button x:Name="ButtonClearAll" Content="Clear All" Grid.Row="1" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B"
+                HorizontalAlignment="Left" VerticalAlignment="Top" Margin="687,538,0,0" Width="471" Height="37" Click="ButtonClearListBox_Click" />
+
+            <TextBlock x:Name="TextBlockSearchTitle" Text="Search by Title:" Grid.Row="1" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" 
+                       HorizontalAlignment="Left" VerticalAlignment="Top" Margin="687,142,0,0" />
+            <Button x:Name="ButtonSearchByTitle" Content="Search" Grid.Row="1" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" 
+                    HorizontalAlignment="Left" VerticalAlignment="Top" Margin="687,167,0,0" Width="120" Height="36" Click="ButtonSearchByTitle_Click"/>
+            <TextBlock x:Name="TextBlockSearchTitle1" Text="Search by Author:" Grid.Row="1" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" 
+                       HorizontalAlignment="Left" VerticalAlignment="Top" Margin="862,142,0,0" />
+            <Button x:Name="ButtonSearchByAuthor" Content="Search" Grid.Row="1" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" 
+                    HorizontalAlignment="Left" VerticalAlignment="Top" Margin="862,167,0,0" Width="120" Height="36" Click="ButtonSearchByAuthor_Click"/>
+            <TextBlock x:Name="TextBlockSearchTitle2" Text="Search Keyword:" Grid.Row="1" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" 
+                       HorizontalAlignment="Left" VerticalAlignment="Top" Margin="1038,142,0,0" />
+            <Button x:Name="ButtonSearchByKeyword" Content="Search" Grid.Row="1" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" 
+                    HorizontalAlignment="Left" VerticalAlignment="Top" Margin="1038,167,0,0" Width="120" Height="36" Click="ButtonSearchByKeyword_Click"/>
+            <TextBlock x:Name="TextBlockSearch" Text="Type here to search for a book..." Grid.Row="1" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" 
+                       HorizontalAlignment="Left" VerticalAlignment="Top" Margin="42,142,0,0" />
+            <TextBox x:Name="TextBoxSearch" Grid.Row="1" FontFamily="Calibri" FontSize="18" Foreground="#3B3B3B" HorizontalAlignment="Left" 
+                     VerticalAlignment="Top" Margin="42,166,0,0" Width="593" Height="89" TextWrapping="Wrap" />
+            <ListBox x:Name="ListBoxBooks" Grid.Row="1" Margin="42,297,563,25" ItemTemplate="{StaticResource BookTemplate}" HorizontalContentAlignment="Stretch" SelectionChanged="ListBoxBooks_SelectionChanged" />
+            <TextBlock x:Name="TextBlockListBox" Text="View the list of books that match your search criteria below:" Grid.Row="1" FontFamily="Calibri" FontSize="16" 
+                       Foreground="#3B3B3B" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="42,272,0,0"  TextWrapping="Wrap" />
+            <Button x:Name="ButtonClearListBox" Content="Clear Search Results" Grid.Row="1" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B"
+                    HorizontalAlignment="Left" VerticalAlignment="Top" Margin="687,218,0,0" Width="471" Height="37" Click="ButtonClearListBox_Click" />
+            <Button x:Name="ButtonLogout" Content="Logout" Grid.Row="1" FontFamily="Calibri" FontSize="18" Foreground="#3B3B3B" 
+                    HorizontalAlignment="Left" VerticalAlignment="Top" Margin="1038,25,0,0" Width="120" Height="36" Click="ButtonLogout_Click"/>
 
             <!-- Status bar for updates -->
             <Border  Grid.Row="2" Background="#E1E1E1" BorderBrush="#3B3B3B" BorderThickness="0,1,0,0" CornerRadius="0,0,20,20">
@@ -102,8 +119,6 @@
                                VerticalAlignment="Center" Padding="20"  TextWrapping="Wrap" />
                 </Grid>
             </Border>
-            <TextBlock x:Name="TextBlockReturnBook" Text="Return a book:" Grid.Row="1" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" 
-                       HorizontalAlignment="Left" VerticalAlignment="Top" Margin="32,227,0,0"  TextWrapping="Wrap" />
         </Grid>
     </Border>
 </Window>
