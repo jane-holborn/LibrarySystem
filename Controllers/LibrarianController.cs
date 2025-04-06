@@ -61,20 +61,5 @@ namespace LibrarySystem.Controllers
         {
             return currentLibrarian;
         }
-
-        // This method is used to add fine amounts to user accounts.
-        public void AddFine(User user, decimal fineAmount)
-        {
-            decimal Fine = user.AccessToFine; 
-            Fine += fineAmount;
-        }
-
-        // This method is used to pay off fine. Can be paid off in installments.
-        public bool PayFine(User user, decimal amountToPay)
-        {
-            decimal Fine = user.AccessToFine;
-            Fine -= amountToPay;
-            return (Fine == 0) ? true : false;
-        }
     }
 }
