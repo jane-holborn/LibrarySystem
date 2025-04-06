@@ -13,13 +13,13 @@ namespace LibrarySystem.Entities
     public class User : Person
     {
         // Property.
-        private decimal Fine;
+        private double Fine;
 
         // This constructor is used to add a new user, properties are inherited from the abstract 'Person' class.
         public User(string userLibraryNumber, string userName, string userEmail)
             : base(userLibraryNumber, userName, userEmail)
         {
-            Fine = 0;
+            Fine = 0.00;
         }
 
         // These getters are used to facilitate access to the properties.
@@ -43,9 +43,17 @@ namespace LibrarySystem.Entities
         {
             get { return BorrowedBooks; }
         }
-        public decimal AccessToFine
+        public string AccessToFineForDatatemplate
+        {
+            get { return "$" + Fine.ToString("F2"); }
+        }
+        public double AccessToFine
         {
             get { return Fine; }
+        }
+        public void setFine(double fineAmount)
+        {
+            Fine = fineAmount;
         }
         public List<Book>? GetBorrowedBooks()
         {

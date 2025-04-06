@@ -96,5 +96,45 @@ namespace LibrarySystem.Controllers
             }
             return listOfAllUsersWithBorrowedBooks;
         }
+
+        // This method is used to find the selected user in the library system user list.
+        public User FindUserInAllUsers(string UserLibraryNumber)
+        {
+            foreach (User user in listOfAllUsers)
+            {
+                if (user.AccessToUserLibraryNumber == UserLibraryNumber)
+                {
+                    return user;
+                }
+            }
+            return null;
+        }
+
+        // This method is used to delete the selected user from the list of all users.
+        public void DeleteUser(User userToDelete)
+        {
+            listOfAllUsers.Remove(userToDelete);
+        }
+
+        // This method is used to add a user to the list of all users.
+        public void AddUser(string userLibraryNumber, string userName, string userEmail)
+        {
+            listOfAllUsers.Add(new User(userLibraryNumber, userName, userEmail));
+        }
+
+        // This method is used to filter users by a keyword and store them in a new instance of a user list.
+        public List<User> SearchUsersByKeyword(string keyword)
+        {
+            List<User> usersFilteredByKeyword = new List<User>();
+
+            foreach (User user in listOfAllUsers)
+            {
+                if (user.AccessToUserName.Contains(keyword, StringComparison.OrdinalIgnoreCase) || user.AccessToUserLibraryNumber.Contains(keyword, StringComparison.OrdinalIgnoreCase) || user.AccessToUserEmail.Contains(keyword, StringComparison.OrdinalIgnoreCase))
+                {
+                    usersFilteredByKeyword.Add(user);
+                }
+            }
+            return usersFilteredByKeyword;
+        }
     }
 }
