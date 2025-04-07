@@ -64,8 +64,8 @@ namespace LibrarySystem
             {
                 if (book.AccessToAvailabilityStatus == Book.BookState.Overdue)
                 {
-                    numberOfOverdueBooks++;                        
-                } 
+                    numberOfOverdueBooks++;
+                }
             }
 
             if (numberOfOverdueBooks > 0)
@@ -82,7 +82,7 @@ namespace LibrarySystem
                     if (UserController.CanBorrowMoreBooks(user))
                     {
                         bookToBorrow.SetBookStateToBorrowed();
-                        bookToBorrow.SetDueDate();
+                        bookToBorrow.SetDueDateToPast();
                         user.GetBorrowedBooks().Add(bookToBorrow);
                         if (bookToBorrow.AccessToBorrowedBy == null)
                         {
@@ -105,25 +105,23 @@ namespace LibrarySystem
         }
 
         // This method is used to return a book.
-        public string ReturnBook(Book book, User user)
+        public string ReturnBook(Book bookToReturn, User user)
         {
-            if (user.AccessToBorrowedBooks.Contains(book))
+            if (user.AccessToBorrowedBooks.Contains(bookToReturn))
             {
-                switch (book.AccessToAvailabilityStatus)
+                switch (bookToReturn.AccessToAvailabilityStatus)
                 {
                     case Book.BookState.Borrowed:
-                        book.SetBookStateToAvailable();
-                        book.ClearDueDate();
-                        user.GetBorrowedBooks().Remove(book);
+                        bookToReturn.SetBookStateToAvailable();
+                        bookToReturn.ClearDueDate();
+                        user.GetBorrowedBooks().Remove(bookToReturn);
+                        bookToReturn.RemoveUserFromBorrowedBy(user);
                         user.DecreaseNumberOfBorrowedBooks();
-                        return $"You have successfully returned {book.AccessToTitle}";
+                        return $"You have successfully returned {bookToReturn.AccessToTitle}";
                     case Book.BookState.Overdue:
                         return "Please see a librarian to pay your late fees before returning the book.";
                     case Book.BookState.Lost:
                         return "This book is listed as 'Lost'. Please see a librarian to resolve this issue.";
-                    case Book.BookState.Available:
-                        return "This book is not currently being borrowed. Please verify the details and try again. " +
-                            "Alternatively, you can click the 'Borrowed Books' button and select a book directly from your list if you haven't done so already.";
                     default:
                         return "There is an issue with the book status. Please see a librarian to resolve the issue";
                 }
@@ -140,7 +138,7 @@ namespace LibrarySystem
         {
             List<User> usersBorrowing = new List<User>();
 
-            foreach( User user in UserController.GetListOfAllUsersWithBorrowedBooks())
+            foreach (User user in UserController.GetListOfAllUsersWithBorrowedBooks())
             {
                 if (user.AccessToBorrowedBooks.Contains(book))
                 {
@@ -151,20 +149,51 @@ namespace LibrarySystem
         }
 
         // This method is used to add fine amounts to user accounts.
-        public void AddFine(User user, double fineAmount)
+        public double AddFine(User user, double fineAmount)
         {
             double Fine = user.AccessToFine;
-            Fine += fineAmount;
-            user.setFine(Fine);
+            if (fineAmount >= 0 && fineAmount <= 6)
+            {
+                Fine += fineAmount;
+                user.setFine(Fine);
+                return 0;
+            }
+            else if (fineAmount < 0)
+            {
+                return -1;
+            }
+            else
+            {
+                return -2;
+            }
         }
 
         // This method is used to pay off fine. Can be paid off in installments.
-        public bool PayFine(User user, double amountToPay)
+        public double PayFine(User user, double amountToPay)
         {
             double Fine = user.AccessToFine;
-            Fine -= (double)amountToPay;
-            user.setFine(Fine);
-            return (Fine == 0) ? true : false;
+            if (amountToPay == Fine)
+            {
+                Fine -= amountToPay;
+                user.setFine(Fine);
+                foreach (Book book in user.GetBorrowedBooks())
+                {
+                    book.SetBookStateToAvailable();
+                }
+                return 0;
+            }
+            else if (amountToPay < 0)
+            {
+                return -1;
+            }
+            else if (amountToPay < Fine)
+            {
+                return -2;
+            }
+            else
+            {
+                return -3;
+            }
         }
     }
 }

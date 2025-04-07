@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LibrarySystem"
         mc:Ignorable="d"
-        Title="UserDashboard" Height="800" Width="1200"
+        Title="UserDashboard" Height="810" Width="1200"
         ResizeMode="CanResizeWithGrip"
         AllowsTransparency="True"
         WindowStyle="None"
@@ -49,7 +49,7 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="140" />
-                <RowDefinition Height="600" />
+                <RowDefinition Height="610" />
                 <RowDefinition Height="60" />
             </Grid.RowDefinitions>
 
@@ -98,7 +98,8 @@
                        HorizontalAlignment="Left" VerticalAlignment="Top" Margin="42,142,0,0" />
             <TextBox x:Name="TextBoxSearch" Grid.Row="1" FontFamily="Calibri" FontSize="18" Foreground="#3B3B3B" HorizontalAlignment="Left" 
                      VerticalAlignment="Top" Margin="42,166,0,0" Width="593" Height="89" TextWrapping="Wrap" />
-            <ListBox x:Name="ListBoxBooks" Grid.Row="1" Margin="42,297,563,25" ItemTemplate="{StaticResource BookTemplate}" HorizontalContentAlignment="Stretch" SelectionChanged="ListBoxBooks_SelectionChanged" />
+            <ListBox x:Name="ListBoxBooks" Grid.Row="1" Margin="42,297,563,19" ItemTemplate="{StaticResource BookTemplate}" HorizontalContentAlignment="Stretch" 
+                     SelectionChanged="ListBoxBooks_SelectionChanged" />
             <TextBlock x:Name="TextBlockListBox" Text="View the list of books that match your search criteria below:" Grid.Row="1" FontFamily="Calibri" FontSize="16" 
                        Foreground="#3B3B3B" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="42,272,0,0"  TextWrapping="Wrap" />
             <Button x:Name="ButtonClearListBox" Content="Clear Search Results" Grid.Row="1" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B"

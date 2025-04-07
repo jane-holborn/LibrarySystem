@@ -42,6 +42,7 @@ namespace LibrarySystem
         // This button click event is used to return the list of all books in the library system.
         private void ButtonAllBooks_Click(object sender, RoutedEventArgs e)
         {
+            Library.GetInstance().GetBookController().CheckForOverdueBooks();
             List<Book> listOfAllBooks = Library.GetInstance().GetBookController().GetListOfAllBooks();
             if (listOfAllBooks.Count > 0)
             {
@@ -52,6 +53,7 @@ namespace LibrarySystem
         // This button click event is used to return a list of all borrowed books. It checks the book state before returning to look for any overdue books.
         private void ButtonAllBorrowedBooks_Click(object sender, RoutedEventArgs e)
         {
+            Library.GetInstance().GetBookController().CheckForOverdueBooks();
             List<Book> listOfBorrowedBooks = Library.GetInstance().GetBookController().GetListOfAllBorrowedBooks();
             ListBoxBooks.ItemsSource = listOfBorrowedBooks;
             TextBlockStatus.Text = "List of borrowed books are displayed to the right. If no books appear, there are no books on loan.";
@@ -72,13 +74,15 @@ namespace LibrarySystem
             ListBoxBooks.ItemsSource= listOfLostBooks;
             TextBlockStatus.Text = "List of lost books are displayed to the right. If no books appear, there are no lost books.";
         }
+
         // This button click event is used to return a list of all registered users.
         private void ButtonAllUsers_Click(object sender, RoutedEventArgs e)
         {
-            int numberOfOverdueBooks = 0;
+            Library.GetInstance().GetBookController().CheckForOverdueBooks();
             List<User> listOfAllUsers = Library.GetInstance().GetUserController().GetListOfAllUsers();
             foreach (User user in listOfAllUsers)
             {
+                int numberOfOverdueBooks = 0;
                 foreach (Book book in user.GetBorrowedBooks())
                 {
                     if (book.AccessToAvailabilityStatus == Book.BookState.Overdue)
@@ -89,15 +93,11 @@ namespace LibrarySystem
 
                 if (numberOfOverdueBooks > 0)
                 {
-                    double fineAmount = (double)numberOfOverdueBooks * 2.00;
+                    double fineAmount = numberOfOverdueBooks * 2.00;
                     user.setFine(fineAmount);
                 }
             }
-
-            if (listOfAllUsers.Count > 0)
-            {
-                ListBoxUsers.ItemsSource = listOfAllUsers;
-            }
+            ListBoxUsers.ItemsSource = listOfAllUsers;
         }
 
         // This button click event is used to display a list of all users with borrowed books in the User listbox.
@@ -126,17 +126,11 @@ namespace LibrarySystem
                 Book selectedBookFromSearchResults = (Book)ListBoxBooks.SelectedItem;
                 Book bookInLibrarySystem = Library.GetInstance().GetBookController().FindBookInAllBooks(selectedBookFromSearchResults.AccessToLibraryReferenceNumber);
 
-                // And if the book exists in the library system.
-                if (bookInLibrarySystem != null)
-                {
-                    // If the book is in a users borrowed book list, will need to remove from that list.
-                    bookInLibrarySystem.SetBookStateToLost();
-                    TextBlockStatus.Text = "The selected book has been set to lost in the system.";
-                }
-                else
-                {
-                    TextBlockStatus.Text = "The selected book is unavailable in the system. Please select another book or try again later.";
-                }
+                // If the book is in a users borrowed book list, will need to remove from that list.
+                bookInLibrarySystem.SetBookStateToLost();
+                TextBlockStatus.Text = "The selected book has been set to lost in the system.";
+                ListBoxBooks.ItemsSource = null;
+
             }
             else
             {
@@ -144,29 +138,49 @@ namespace LibrarySystem
             }
         }
 
-        // This method allows the librarian to mark a book as available. It also updates the associated user's book list.
-        private void ButtonMarkBookAsAvailable_Click(object sender, RoutedEventArgs e)
+        // This method allows the librarian to return a book and mark it as available. It also updates the associated user's book list.
+        private void ButtonReturnBook_Click(object sender, RoutedEventArgs e)
         {
             if (ListBoxBooks.SelectedItem != null)
             {
                 Book selectedBookFromSearchResults = (Book)ListBoxBooks.SelectedItem;
                 Book bookInLibrarySystem = Library.GetInstance().GetBookController().FindBookInAllBooks(selectedBookFromSearchResults.AccessToLibraryReferenceNumber);
+                List<Book> listOfLostBooks = Library.GetInstance().GetBookController().GetlistOfAllLostBooks();
+                User currentUser = Library.GetInstance().GetUserController().GetCurrentUser();
+                Book bookInUsersBorrowedList = Library.GetInstance().GetBookController().FindBookInUsersBorrowedlist(selectedBookFromSearchResults.AccessToLibraryReferenceNumber, currentUser);
 
-                // And if the book exists in the library system.
-                if (bookInLibrarySystem != null)
+                if (bookInUsersBorrowedList != null)
                 {
-                    // If the book is in a users borrowed book list, will need to remove from that list.
-                    bookInLibrarySystem.SetBookStateToAvailable();
-                    TextBlockStatus.Text = "The selected book has been set to back to available in the system.";
+                    if (currentUser.AccessToFine == 0)
+                    {
+                        if (listOfLostBooks.Contains(bookInLibrarySystem))
+                        {
+                            bookInLibrarySystem.SetBookStateToAvailable();
+                            Library.GetInstance().GetBookController().DeleteBookFromListOfLostBooks(bookInLibrarySystem);
+                        }
+                        bookInLibrarySystem.SetBookStateToBorrowed();
+                        string borrowMessage = Library.GetInstance().ReturnBook(bookInUsersBorrowedList, currentUser);
+                        TextBlockStatus.Text = borrowMessage;
+                        ListBoxBooks.ItemsSource = null;
+                        ListBoxUsers.ItemsSource = null;
+                        TextBoxSearchBooks.Text = null;
+                    }
+                    else
+                    {
+                        TextBlockStatus.Text = "There are still fines outstanding for this user for this book. Please ensure you late fees are paid before returning the book.";
+                    }
+
                 }
                 else
                 {
                     TextBlockStatus.Text = "The selected book is unavailable in the system. Please select another book or try again later.";
+                    ListBoxBooks.ItemsSource = null;
+                    TextBoxSearchBooks.Text = null;
                 }
             }
             else
             {
-                TextBlockStatus.Text = "To set a books status to available, please search for the book first, and select it from the search results.";
+                TextBlockStatus.Text = "To return a book, click 'Borrowed Books' and select a book you wish to return.";
             }
         }
 
@@ -204,22 +218,23 @@ namespace LibrarySystem
                 Book bookInLibrarySystem = Library.GetInstance().GetBookController().FindBookInAllBooks(selectedBookFromSearchResults.AccessToLibraryReferenceNumber);
 
                 // And if the book exists in the library system.
-                if (bookInLibrarySystem != null)
+                if (bookInLibrarySystem.AccessToBorrowedBy == null)
                 {
                     MessageBoxResult result = MessageBox.Show("This action will delete the selected book from the Library system. This action cannot be undone, do you wish to proceed? Click 'Yes' to delete or 'No' to cancel.", "Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning);
                     if (result == MessageBoxResult.Yes)
                     {
                         Library.GetInstance().GetBookController().DeleteBook(bookInLibrarySystem);
-                        TextBlockStatus.Text = "The selected book has been permanently deleted from the system.";
+                        TextBlockStatus.Text = $"The book {bookInLibrarySystem.AccessToTitle} has been permanently deleted from the system.";
+                        ListBoxBooks.ItemsSource = null;
                     }
                     else
                     {
-                        TextBlockStatus.Text = "This book has not been deleted. ";
+                        TextBlockStatus.Text = $"The book {bookInLibrarySystem.AccessToTitle} has not been deleted.";
                     }
                 }
                 else
                 {
-                    TextBlockStatus.Text = "The selected book is unavailable in the system. Please select another book or try again later.";
+                    TextBlockStatus.Text = $"The book {bookInLibrarySystem.AccessToTitle} is currently on loan. Please select another book or try again later once the book is returned.";
                 }
             }
             else
@@ -269,23 +284,25 @@ namespace LibrarySystem
                 User selectedUserFromSearchResults = (User)ListBoxUsers.SelectedItem;
                 User userInLibrarySystem = Library.GetInstance().GetUserController().FindUserInAllUsers(selectedUserFromSearchResults.AccessToUserLibraryNumber);
 
+
                 // And if the book exists in the library system.
-                if (userInLibrarySystem != null)
+                if (userInLibrarySystem.AccessToNumberOfBorrowedBooks == 0)
                 {
                     MessageBoxResult result = MessageBox.Show("This action will delete the selected user from the Library system. This action cannot be undone, do you wish to proceed? Click 'Yes' to delete or 'No' to cancel.", "Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning);
                     if (result == MessageBoxResult.Yes)
                     {
                         Library.GetInstance().GetUserController().DeleteUser(userInLibrarySystem);
-                        TextBlockStatus.Text = "The selected user has been permanently deleted from the system.";
+                        TextBlockStatus.Text = $"The user {userInLibrarySystem.AccessToUserName} has been permanently deleted from the system.";
+                        ListBoxUsers.ItemsSource = null;
                     }
                     else
                     {
-                        TextBlockStatus.Text = "This book has not been deleted. ";
+                        TextBlockStatus.Text = $"The user {userInLibrarySystem.AccessToUserName} has not been deleted. ";
                     }
                 }
                 else
                 {
-                    TextBlockStatus.Text = "The selected user is unavailable in the system. Please select another user or try again later.";
+                    TextBlockStatus.Text = $"The user {userInLibrarySystem.AccessToUserName} has books on loan. Please ensure they are returned before deleting the user.";
                 }
             }
             else
@@ -297,7 +314,7 @@ namespace LibrarySystem
         // This method is used to add a fine manually to users.
         private void ButtonAddFine_Click(object sender, RoutedEventArgs e)
         {
-            if (ListBoxUsers.SelectedItem != null && TextBoxAddFine.Text != null)
+            if (ListBoxUsers.SelectedItem != null)
             {
                 string convertedFineAmount = TextBoxAddFine.Text;
                 if (!double.TryParse(convertedFineAmount, out double fineAmount))
@@ -312,10 +329,24 @@ namespace LibrarySystem
 
                     if (userInLibrarySystem != null)
                     {
-                        Library.GetInstance().AddFine(userInLibrarySystem, fineAmount);
-                        TextBlockStatus.Text = $"The amount of ${fineAmount} has been added to {userInLibrarySystem.AccessToUserName}.";
-                        TextBoxAddFine.Clear();
-                        ListBoxUsers.ItemsSource = null;
+                        double result = Library.GetInstance().AddFine(userInLibrarySystem, fineAmount);
+                        switch (result)
+                        {
+                            case 0:
+                                TextBlockStatus.Text = $"The amount of ${fineAmount} has been added to {userInLibrarySystem.AccessToUserName}.";
+                                TextBoxAddFine.Clear();
+                                ListBoxUsers.ItemsSource = null;
+                                break;
+                            case -1:
+                                TextBlockStatus.Text = $"The amount entered is a negative number. Please enter a positive number and try again.";
+                                TextBoxPayFine.Clear();
+                                break;
+                            case -2:
+                                TextBlockStatus.Text = $"The amount of ${fineAmount} is more the maximum late fees that can be applied. The late fee per book is $2, " +
+                                    $"and each user can borrow up to 3 books. The maximum amount of fines that can be applied is $6.";
+                                TextBoxPayFine.Clear();
+                                break;
+                        }
                     }
                     else
                     {
@@ -332,7 +363,7 @@ namespace LibrarySystem
         // This method is used to pay a fine on a users library account.
         private void ButtonPayFine_Click(object sender, RoutedEventArgs e)
         {
-            if (ListBoxUsers.SelectedItem != null && TextBoxAddFine.Text != null)
+            if (ListBoxUsers.SelectedItem != null)
             {
                 string convertedAmountToPay = TextBoxPayFine.Text;
                 if (!double.TryParse(convertedAmountToPay, out double amountToPay))
@@ -347,21 +378,30 @@ namespace LibrarySystem
 
                     if (userInLibrarySystem != null)
                     {
-                        bool result = Library.GetInstance().PayFine(userInLibrarySystem, amountToPay);
-                        if (result)
+                        double result = Library.GetInstance().PayFine(userInLibrarySystem, amountToPay);
+                        switch (result)
                         {
-                            TextBlockStatus.Text = $"The amount of ${amountToPay} has been paid. The fines for {userInLibrarySystem.AccessToUserName} have been paid in full. ";
-                            TextBoxPayFine.Clear();
-                            ListBoxUsers.ItemsSource = null;
+                            case 0:
+                                TextBlockStatus.Text = $"The amount of ${amountToPay} has been paid. The fines for {userInLibrarySystem.AccessToUserName} have been paid in full. ";
+                                ListBoxUsers.ItemsSource = null;
+                                break;
+                            case -1:
+                                TextBlockStatus.Text = $"The amount entered is a negative number. Please enter a positive number and try again.";
+                                break;
+                            case -2:
+                                TextBlockStatus.Text = $"The outstanding fines are ${userInLibrarySystem.AccessToFine}. This amount needs to be paid in full.";
+                                break;
+                            case -3:
+                                TextBlockStatus.Text = $"The amount of ${amountToPay} is more than the late fees that are owing. The fines for {userInLibrarySystem.AccessToUserName} " +
+                                    $"are ${userInLibrarySystem.AccessToFine}, please enter a number equal to or less than the amount owing.";
+                                break;
+                            default:
+                                TextBlockStatus.Text = "There was an error with the action, please try again.";
+                                break;
                         }
-                        else
-                        {
-                            TextBlockStatus.Text = $"The amount of ${amountToPay} has been paid off the fines for {userInLibrarySystem.AccessToUserName}. There are still outstandings fines for this account. ";
-                            TextBoxPayFine.Clear();
-                            ListBoxUsers.ItemsSource = null;
-                        }
-                            
-                    }
+                        TextBoxPayFine.Clear();
+                    }                          
+
                     else
                     {
                         TextBlockStatus.Text = "The selected user is unavailable in the system. Please select another user or try again later.";

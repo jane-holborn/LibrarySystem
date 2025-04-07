@@ -98,7 +98,12 @@ namespace LibrarySystem
         {
             BorrowedBy.Add(user);
         }
-        
+
+        public void RemoveUserFromBorrowedBy(User user)
+        {
+            BorrowedBy.Remove(user);
+        }
+
         // This method is used to clear the due date when returning a book.
         public void ClearDueDate()
         {

@@ -116,6 +116,7 @@ namespace LibrarySystem.Controllers
         // This method is used to get a list of all the borrowed books.
         public List<Book> GetListOfAllBorrowedBooks()
         {
+            ListOfBorrowedBooks.Clear();
             CheckForOverdueBooks();
             foreach (Book book in ListOfAllBooks)
             {
@@ -130,6 +131,7 @@ namespace LibrarySystem.Controllers
         // This method is used to get a list of all the overdue books.
         public List<Book> GetListOfAllOverdueBooks()
         {
+            ListOfOverdueBooks.Clear();
             CheckForOverdueBooks();
             foreach (Book book in ListOfAllBooks)
             {
@@ -144,6 +146,7 @@ namespace LibrarySystem.Controllers
         // This method is used to get a list of all the lost books.
         public List<Book> GetlistOfAllLostBooks()
         {
+            ListOfLostBooks.Clear();
             foreach (Book book in ListOfAllBooks)
             {
                 if (book.AccessToAvailabilityStatus == Book.BookState.Lost)
@@ -152,6 +155,11 @@ namespace LibrarySystem.Controllers
                 }
             }
             return ListOfLostBooks;
+        }
+
+        public void DeleteBookFromListOfLostBooks(Book bookToRemove)
+        {
+            ListOfLostBooks.Remove(bookToRemove);
         }
 
         // This method is used to delete the selected book from the list of all books.

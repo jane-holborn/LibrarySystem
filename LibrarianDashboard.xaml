@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LibrarySystem"
         mc:Ignorable="d"
-        Title="LibrarianDashboard" Height="1200" Width="1600"
+        Title="LibrarianDashboard" Height="1000" Width="1600"
         ResizeMode="CanResizeWithGrip"
         AllowsTransparency="True"
         WindowStyle="None"
@@ -131,7 +131,7 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="140"/>
-                <RowDefinition Height="1000" />
+                <RowDefinition Height="800" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
@@ -147,83 +147,93 @@
                        HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,48,0,0" />
             <Button x:Name="ButtonLogout" Content="Logout" Grid.Row="1" FontFamily="Calibri" FontSize="18" Foreground="#3B3B3B" 
                     HorizontalAlignment="Left" VerticalAlignment="Top" Margin="1438,27,0,0" Width="120" Height="36" Click="ButtonLogout_Click"/>
-            <ListBox x:Name="ListBoxBooks" Grid.Row="1" Margin="184,176,813,374" ItemTemplate="{StaticResource BookTemplateWithUser}" HorizontalContentAlignment="Stretch" />
-            <ListBox x:Name="ListBoxUsers" Grid.Row="1" Margin="957,176,40,374" ItemTemplate="{StaticResource UserWithBooksTemplate}" HorizontalContentAlignment="Stretch" />
+            <ListBox x:Name="ListBoxBooks" Grid.Row="1" Margin="184,157,813,247" ItemTemplate="{StaticResource BookTemplateWithUser}" HorizontalContentAlignment="Stretch" />
+            <ListBox x:Name="ListBoxUsers" Grid.Row="1" Margin="957,155,40,249" ItemTemplate="{StaticResource UserWithBooksTemplate}" HorizontalContentAlignment="Stretch" />
 
             <!-- Book management -->
             <TextBlock x:Name="TextBlockBookManagement" Text="Book Management:" Grid.Row="1" FontFamily="Calibri" FontSize="20" Foreground="#3B3B3B"
-                       HorizontalAlignment="Left" VerticalAlignment="Top" Margin="40,121,0,0"  TextWrapping="Wrap"  />
+                       HorizontalAlignment="Left" VerticalAlignment="Top" Margin="40,111,0,0"  TextWrapping="Wrap"  />
             <Button x:Name="ButtonAllBooks" Content="All Books" Grid.Row="1" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" 
-                    HorizontalAlignment="Left" VerticalAlignment="Top" Margin="40,176,0,0" Width="120" Height="36" Click="ButtonAllBooks_Click" />
+                    HorizontalAlignment="Left" VerticalAlignment="Top" Margin="40,157,0,0" Width="120" Height="36" Click="ButtonAllBooks_Click" />
             <Button x:Name="ButtonAllBorrowedBooks" Content="Borrowed Books" Grid.Row="1" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" 
-                    HorizontalAlignment="Left" VerticalAlignment="Top" Margin="40,233,0,0" Width="120" Height="36" Click="ButtonAllBorrowedBooks_Click" />
+                    HorizontalAlignment="Left" VerticalAlignment="Top" Margin="40,214,0,0" Width="120" Height="36" Click="ButtonAllBorrowedBooks_Click" />
             <Button x:Name="ButtonAllOverdueBooks" Content="Overdue Books" Grid.Row="1" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" 
-                    HorizontalAlignment="Left" VerticalAlignment="Top" Margin="40,290,0,0" Width="120" Height="36" Click="ButtonAllOverdueBooks_Click" />
+                    HorizontalAlignment="Left" VerticalAlignment="Top" Margin="40,269,0,0" Width="120" Height="36" Click="ButtonAllOverdueBooks_Click" />
+            <Button x:Name="ButtonAllLostBooks" Content="Lost Books" Grid.Row="1" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" 
+                    HorizontalAlignment="Left" VerticalAlignment="Top" Margin="40,326,0,0" Width="120" Height="36" Click="ButtonAllLostBooks_Click" />
             <Button x:Name="ButtonRemoveBook" Content="Remove Book" Grid.Row="1" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" 
-                    HorizontalAlignment="Left" VerticalAlignment="Top" Margin="40,403,0,0" Width="120" Height="36" Click="ButtonRemoveBook_Click"/>
+                    HorizontalAlignment="Left" VerticalAlignment="Center" Margin="40,0,0,0" Width="120" Height="36" Click="ButtonRemoveBook_Click"/>
             <Button x:Name="ButtonMarkBookAsLost" Content="Mark Lost" Grid.Row="1" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" 
-                    HorizontalAlignment="Left" VerticalAlignment="Top" Margin="40,460,0,0" Width="120" Height="36" Click="ButtonMarkBookAsLost_Click" />
-            <Button x:Name="ButtonMarkBookAsAvailable" Content="Mark Available" Grid.Row="1" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" 
-                    HorizontalAlignment="Left" VerticalAlignment="Top" Margin="40,518,0,0" Width="120" Height="36" Click="ButtonMarkBookAsAvailable_Click" />
+                    HorizontalAlignment="Left" VerticalAlignment="Top" Margin="40,440,0,0" Width="120" Height="36" Click="ButtonMarkBookAsLost_Click" />
+            <Button x:Name="ButtonReturnBook" Content="Return Book" Grid.Row="1" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" 
+                    HorizontalAlignment="Left" VerticalAlignment="Top" Margin="40,497,0,0" Width="120" Height="36" Click="ButtonReturnBook_Click" />
             <Button x:Name="ButtonAddBook" Content="Add Book" Grid.Row="1" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" 
-                    HorizontalAlignment="Left" VerticalAlignment="Top" Margin="40,712,0,0" Width="120" Height="36" Click="ButtonAddBook_Click" />
+                    HorizontalAlignment="Left" VerticalAlignment="Top" Margin="40,587,0,0" Width="120" Height="36" Click="ButtonAddBook_Click" />
             <Label x:Name="LabelTitle" Content="Title" Grid.Row="1"  FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" 
-                   HorizontalAlignment="Left" VerticalAlignment="Top" Margin="184,682,0,0" RenderTransformOrigin="0,0.542" />
+                   HorizontalAlignment="Left" VerticalAlignment="Top" Margin="184,561,0,0" RenderTransformOrigin="0,0.542" />
             <TextBox x:Name="TextBoxTitle" Grid.Row="1" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" HorizontalAlignment="Left" 
-                     VerticalAlignment="Top" Margin="184,712,0,0" Width="601" Height="36" TextWrapping="Wrap"/>
+                     VerticalAlignment="Top" Margin="184,587,0,0" Width="601" Height="36" TextWrapping="Wrap"/>
             <Label x:Name="LabelAuthor" Content="Author" Grid.Row="1" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" 
-                   HorizontalAlignment="Left" VerticalAlignment="Top" Margin="184,755,0,0" />
+                   HorizontalAlignment="Left" VerticalAlignment="Top" Margin="184,620,0,0" />
             <TextBox x:Name="TextBoxAuthor" Grid.Row="1" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" HorizontalAlignment="Left" 
-                     VerticalAlignment="Top" Margin="184,790,0,0" Width="122" Height="36" TextWrapping="Wrap"/>
+                     VerticalAlignment="Top" Margin="184,650,0,0" Width="122" Height="36" TextWrapping="Wrap"/>
             <Label x:Name="LabelPublicationDate" Content="Publication Date" Grid.Row="1" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" 
-                   HorizontalAlignment="Left" VerticalAlignment="Top" Margin="311,755,0,0" />
+                   HorizontalAlignment="Left" VerticalAlignment="Top" Margin="311,620,0,0" />
             <TextBox x:Name="TextBoxPublicationDate" Grid.Row="1" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" HorizontalAlignment="Left" 
-                     VerticalAlignment="Top" Margin="311,790,0,0" Width="225" Height="36" TextWrapping="Wrap"/>
+                     VerticalAlignment="Top" Margin="311,650,0,0" Width="225" Height="36" TextWrapping="Wrap"/>
             <Label x:Name="LabelLibraryReferenceNumber" Content="Library Reference Number" Grid.Row="1" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" 
-                   HorizontalAlignment="Left" VerticalAlignment="Top" Margin="541,755,0,0" />
-            <TextBox x:Name="TextBoxLibraryReferenceNumber" Grid.Row="1" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="541,790,0,0" Width="244" Height="36" TextWrapping="Wrap"/>
+                   HorizontalAlignment="Left" VerticalAlignment="Top" Margin="541,620,0,0" />
+            <TextBox x:Name="TextBoxLibraryReferenceNumber" Grid.Row="1" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="541,650,0,0" Width="244" Height="36" TextWrapping="Wrap"/>
             <Button x:Name="ButtonSearchBook" Content="Search Book" Grid.Row="1" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" 
-                    HorizontalAlignment="Left" VerticalAlignment="Top" Margin="40,866,0,0" Width="120" Height="36" Click="ButtonSearchBook_Click"/>
+                    HorizontalAlignment="Left" VerticalAlignment="Top" Margin="40,711,0,0" Width="120" Height="36" Click="ButtonSearchBook_Click"/>
             <Label x:Name="LabelSearchBooks" Content="Search by Title or Author" Grid.Row="1" FontFamily="Calibri" Foreground="#3B3B3B" FontSize="16"
-                   HorizontalAlignment="Left" VerticalAlignment="Top" Margin="184,831,0,0" />
-            <TextBox x:Name="TextBoxSearchBooks" HorizontalAlignment="Left" Margin="184,866,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="601" Height="36"/>
+                   HorizontalAlignment="Left" VerticalAlignment="Top" Margin="184,684,0,0" />
+            <TextBox x:Name="TextBoxSearchBooks" HorizontalAlignment="Left" Margin="184,711,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="601" Height="36"/>
+            <Button x:Name="ButtonClearBookListBox" Content="Clear All" Grid.Row="1" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" 
+                    HorizontalAlignment="Left" VerticalAlignment="Top" Margin="184,754,0,0" Width="601" Height="36" Click="ButtonClearBookListBox_Click"/>
 
             <!-- User management -->
             <TextBlock x:Name="TextBlockUserManagement" Text="User Management:" Grid.Row="1" FontFamily="Calibri" FontSize="20" Foreground="#3B3B3B"
-                       HorizontalAlignment="Left" VerticalAlignment="Top" Margin="812,121,0,0"  TextWrapping="Wrap"  />
+                       HorizontalAlignment="Left" VerticalAlignment="Top" Margin="812,111,0,0"  TextWrapping="Wrap"  />
             <Button x:Name="ButtonAllUsers" Content="All Users" Grid.Row="1" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" 
-                    HorizontalAlignment="Left" VerticalAlignment="Top" Margin="812,176,0,0" Width="120" Height="36" Click="ButtonAllUsers_Click" />
+                    HorizontalAlignment="Left" VerticalAlignment="Top" Margin="812,157,0,0" Width="120" Height="36" Click="ButtonAllUsers_Click" />
             <Button x:Name="ButtonAllUserBorrowingBooks" Content="Users Borrowing" Grid.Row="1" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" 
-                    HorizontalAlignment="Left" VerticalAlignment="Top" Margin="812,233,0,0" Width="120" Height="36" Click="ButtonAllUserBorrowingBooks_Click" />
+                    HorizontalAlignment="Left" VerticalAlignment="Top" Margin="812,213,0,0" Width="120" Height="36" Click="ButtonAllUserBorrowingBooks_Click" />
             <Button x:Name="ButtonRemoveUser" Content="Remove User" Grid.Row="1" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" 
-                    HorizontalAlignment="Left" VerticalAlignment="Top" Margin="812,290,0,0" Width="120" Height="36" Click="ButtonRemoveUser_Click"/>
+                    HorizontalAlignment="Left" VerticalAlignment="Top" Margin="812,269,0,0" Width="120" Height="36" Click="ButtonRemoveUser_Click"/>
             <Button x:Name="ButtonPayFine" Content="Pay Fine" Grid.Row="1" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" 
-                    HorizontalAlignment="Left" VerticalAlignment="Top" Margin="812,347,0,0" Width="120" Height="36" Click="ButtonPayFine_Click"/>
+                    HorizontalAlignment="Left" VerticalAlignment="Top" Margin="812,326,0,0" Width="120" Height="36" Click="ButtonPayFine_Click"/>
+            <Label x:Name="LabelPayFine" Content="Amount to pay:" Grid.Row="1" FontFamily="Calibri" Foreground="#3B3B3B" 
+                   HorizontalAlignment="Left" VerticalAlignment="Top" Margin="812,366,0,0" FontSize="16" Width="120" />
+            <TextBox x:Name="TextBoxPayFine" Grid.Row="1" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" HorizontalAlignment="Left" 
+                     VerticalAlignment="Top" Margin="812,393,0,0" Width="120" Height="36" TextWrapping="Wrap" />
             <Button x:Name="ButtonAddFine" Content="Add Fine" Grid.Row="1" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" 
-                    HorizontalAlignment="Left" VerticalAlignment="Top" Margin="812,465,0,0" Width="120" Height="36" Click="ButtonAddFine_Click"/>
+                    HorizontalAlignment="Left" VerticalAlignment="Top" Margin="812,445,0,0" Width="120" Height="36" Click="ButtonAddFine_Click"/>
             <Label x:Name="LabelAddFine" Content="Amount to add:" Grid.Row="1" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" 
-                   HorizontalAlignment="Left" VerticalAlignment="Top" Margin="816,506,0,0" RenderTransformOrigin="1.801,3.95" />
+                   HorizontalAlignment="Left" VerticalAlignment="Top" Margin="812,485,0,0" RenderTransformOrigin="1.801,3.95" Width="120" />
             <TextBox x:Name="TextBoxAddFine" Grid.Row="1" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" HorizontalAlignment="Left" 
-                     VerticalAlignment="Top" Margin="812,418,0,0" Width="120" Height="36" TextWrapping="Wrap" />
+                     VerticalAlignment="Top" Margin="812,512,0,0" Width="120" Height="36" TextWrapping="Wrap" />
             <Button x:Name="ButtonAddUser" Content="Register User" Grid.Row="1" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" 
-                    HorizontalAlignment="Left" VerticalAlignment="Top" Margin="812,712,0,0" Width="120" Height="36" Click="ButtonAddUser_Click" RenderTransformOrigin="0.558,-0.889"/>
+                    HorizontalAlignment="Left" VerticalAlignment="Top" Margin="812,587,0,0" Width="120" Height="36" Click="ButtonAddUser_Click" RenderTransformOrigin="0.558,-0.889"/>
             <Label x:Name="LableUserLibraryNumber" Content="User Library Number" Grid.Row="1" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B"  
-                   HorizontalAlignment="Left" VerticalAlignment="Top" Margin="960,677,0,0" />
+                   HorizontalAlignment="Left" VerticalAlignment="Top" Margin="957,561,0,0" />
             <TextBox x:Name="TextBoxUserLibraryNumber" Grid.Row="1" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" HorizontalAlignment="Left" 
-                     VerticalAlignment="Top" Margin="957,712,0,0" Width="230" Height="36" TextWrapping="Wrap"/>
+                     VerticalAlignment="Top" Margin="957,587,0,0" Width="230" Height="36" TextWrapping="Wrap"/>
             <Label x:Name="LableUserName" Content="User Name" Grid.Row="1" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" 
-                   HorizontalAlignment="Left" VerticalAlignment="Top" Margin="1200,682,0,0" />
+                   HorizontalAlignment="Left" VerticalAlignment="Top" Margin="1192,561,0,0" />
             <TextBox x:Name="TextBoxUserEmail" Grid.Row="1" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" HorizontalAlignment="Left" 
-                     VerticalAlignment="Top" Margin="957,788,0,0" Width="601" Height="36" TextWrapping="Wrap"/>
+                     VerticalAlignment="Top" Margin="957,650,0,0" Width="601" Height="36" TextWrapping="Wrap"/>
             <Label x:Name="LableUserEmail" Content="User Email" Grid.Row="1" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" 
-                   HorizontalAlignment="Left" VerticalAlignment="Top" Margin="965,753,0,0" />
+                   HorizontalAlignment="Left" VerticalAlignment="Top" Margin="957,620,0,0" />
             <TextBox x:Name="TextBoxUserName" Grid.Row="1" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" HorizontalAlignment="Left" 
-                     VerticalAlignment="Top" Margin="1192,712,0,0" Width="366" Height="36" TextWrapping="Wrap"/>
+                     VerticalAlignment="Top" Margin="1192,587,0,0" Width="366" Height="36" TextWrapping="Wrap"/>
             <Button x:Name="ButtonSearchUser" Content="Search User" Grid.Row="1" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" 
-                    HorizontalAlignment="Left" VerticalAlignment="Top" Margin="812,865,0,0" Width="120" Height="36" Click="ButtonSearchUser_Click"/>
+                    HorizontalAlignment="Left" VerticalAlignment="Top" Margin="812,711,0,0" Width="120" Height="36" Click="ButtonSearchUser_Click"/>
             <Label x:Name="LabelSearchUsers" Content="Search by Name, Library Number or Email" Grid.Row="1" FontFamily="Calibri" Foreground="#3B3B3B" FontSize="16"
-                   HorizontalAlignment="Left" VerticalAlignment="Top" Margin="965,829,0,0" />
-            <TextBox x:Name="TextBoxSearchUsers" HorizontalAlignment="Left" Margin="957,864,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="601" Height="38"/>
+                   HorizontalAlignment="Left" VerticalAlignment="Top" Margin="957,684,0,0" />
+            <TextBox x:Name="TextBoxSearchUsers" HorizontalAlignment="Left" Margin="957,711,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="601" Height="36"/>
+            <Button x:Name="ButtonClearUserListBox" Content="Clear All" Grid.Row="1" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" 
+                    HorizontalAlignment="Left" VerticalAlignment="Top" Margin="957,754,0,0" Width="601" Height="36" Click="ButtonClearUserListBox_Click"/>
 
             <!-- Status bar for updates -->
             <Border  Grid.Row="2" Background="LightGray" BorderBrush="#3B3B3B" BorderThickness="0,1,0,0" CornerRadius="0,0,20,20">
@@ -236,16 +246,7 @@
                     <TextBlock x:Name="TextBlockStatus" Text="Ready" Grid.Column="1" FontFamily="Calibri" FontSize="14" Foreground="#3B3B3B" VerticalAlignment="Center" Padding="20" />
                 </Grid>
             </Border>
-            <Label x:Name="LabelAddFine_Copy" Content="Amount to pay:" Grid.Row="1" FontFamily="Calibri" Foreground="#3B3B3B" 
-                HorizontalAlignment="Left" VerticalAlignment="Top" Margin="812,388,0,0" FontSize="16" />
-            <TextBox x:Name="TextBoxPayFine" Grid.Row="1" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" HorizontalAlignment="Left" 
-                VerticalAlignment="Top" Margin="812,536,0,0" Width="120" Height="36" TextWrapping="Wrap" />
-            <Button x:Name="ButtonClearUserListBox" Content="Clear All" Grid.Row="1" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" 
-                HorizontalAlignment="Left" VerticalAlignment="Top" Margin="957,938,0,0" Width="601" Height="36" Click="ButtonClearUserListBox_Click"/>
-            <Button x:Name="ButtonClearBookListBox" Content="Clear All" Grid.Row="1" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" 
-                HorizontalAlignment="Left" VerticalAlignment="Top" Margin="184,938,0,0" Width="601" Height="36" Click="ButtonClearBookListBox_Click"/>
-            <Button x:Name="ButtonAllLostBooks" Content="Lost Books" Grid.Row="1" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" 
-                HorizontalAlignment="Left" VerticalAlignment="Top" Margin="40,347,0,0" Width="120" Height="36" />
+
         </Grid>
     </Border>
 </Window>
