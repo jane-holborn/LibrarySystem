@@ -1,39 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace LibrarySystem.Entities
+﻿namespace LibrarySystem.Entities
 {
-    public class Librarian : User
+    public class Librarian : Person
     {
         // Property.
-        private string StaffID;
+        private string staffId;
 
         // This constructor is used to add a new librarian, properties are inherited from the abstract 'Person' class.
-        public Librarian(string staffID, string userName, string userEmail, string userLibraryNumber)
-            : base(userLibraryNumber, userName, userEmail)
+        public Librarian(string staffIdNumber, string personName, string personEmail)
+            : base(personName, personEmail)
         {
-            StaffID = staffID;
+            staffId = staffIdNumber;
         }
 
         // These getters are used to facilitate access to the properties.
         public string AccessLibrarianStaffId
         {
-            get { return StaffID; }
-        }
-        public string AccessLibrarianUserName
-        {
-            get { return UserName; }
-        }
-        public string AccessLibrarianUserEmail
-        {
-            get { return UserEmail; }
-        }
-        public string AccessLibrarianUserLibraryNumber
-        {
-            get { return UserLibraryNumber; }
+            get { return staffId; }
         }
     }
 }

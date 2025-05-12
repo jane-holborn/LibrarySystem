@@ -1,15 +1,5 @@
-﻿using LibrarySystem.Controllers;
-using LibrarySystem.Entities;
-using System.Text;
+﻿using LibrarySystem.Entities;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace LibrarySystem
 {
@@ -33,7 +23,7 @@ namespace LibrarySystem
 
             if (string.IsNullOrEmpty(enteredId))
             {
-                MessageBox.Show("Please enter a valid ID number.", "Login Unsucessful", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Please enter a valid user ID or staff ID.", "Login Unsucessful", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
             else if(Library.GetInstance().GetLibrarianController().CheckLibrarianStaffId(enteredId))
@@ -53,6 +43,7 @@ namespace LibrarySystem
             else
             {
                 MessageBox.Show("Login unsuccessful, press Ok to exit.", "Login Unsuccessful", MessageBoxButton.OK, MessageBoxImage.Warning);
+                TextBoxHome.Clear();
             }
         }
 

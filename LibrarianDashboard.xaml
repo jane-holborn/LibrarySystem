@@ -59,9 +59,9 @@
                                 </Grid.ColumnDefinitions>
 
                                 <TextBlock Grid.Row="0" Grid.Column="0" Text="User Library Number: " FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" />
-                                <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Path=AccessToUserLibraryNumber}" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" />
+                                <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Path=UserLibraryNumber}" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" />
                                 <TextBlock Grid.Row="1" Grid.Column="0" Text="User Name: " FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" />
-                                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Path=AccessToUserName}" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" />
+                                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Path=Name}" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" />
                             </Grid>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
@@ -87,18 +87,18 @@
                     <ColumnDefinition Width="330"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Row="0" Grid.Column="0" Text="User Library Number: " FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" HorizontalAlignment="Left"/>
-                <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Path=AccessToUserLibraryNumber}" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" HorizontalAlignment="Left" />
+                <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Path=UserLibraryNumber}" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" HorizontalAlignment="Left" />
                 <TextBlock Grid.Row="1" Grid.Column="0" Text="User Name: " FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" />
-                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Path=AccessToUserName}" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" HorizontalAlignment="Left" />
+                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Path=Name}" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" HorizontalAlignment="Left" />
                 <TextBlock Grid.Row="2" Grid.Column="0" Text="User Email: " FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" />
-                <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Path=AccessToUserEmail}" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" HorizontalAlignment="Left" />
+                <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Path=Email}" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" HorizontalAlignment="Left" />
                 <TextBlock Grid.Row="3" Grid.Column="0" Text="Fines: " FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" />
-                <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Path=AccessToFineForDatatemplate}" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" HorizontalAlignment="Left" />
+                <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Path=FineForDatatemplate}" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" HorizontalAlignment="Left" />
                 <TextBlock Grid.Row="4" Grid.Column="0" Text="Number of Borrowed Books: " FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" HorizontalAlignment="Left" />
-                <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding Path=AccessToNumberOfBorrowedBooks}" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" HorizontalAlignment="Left" />
+                <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding Path=NumberOfBorrowedBooks}" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" HorizontalAlignment="Left" />
                 <TextBlock Grid.Row="5" Grid.Column="0" Text="Books Borrowed: " FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" />
 
-                <ListBox Grid.Row="6" Grid.ColumnSpan="2" ItemsSource="{Binding Path=AccessToBorrowedBooks}" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                <ListBox Grid.Row="6" Grid.ColumnSpan="2" ItemsSource="{Binding Path=BorrowedBooks}" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Grid Margin="10">
@@ -246,7 +246,6 @@
                     <TextBlock x:Name="TextBlockStatus" Text="Ready" Grid.Column="1" FontFamily="Calibri" FontSize="14" Foreground="#3B3B3B" VerticalAlignment="Center" Padding="20" />
                 </Grid>
             </Border>
-
         </Grid>
     </Border>
 </Window>

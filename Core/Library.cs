@@ -1,11 +1,5 @@
 ﻿using LibrarySystem.Controllers;
 using LibrarySystem.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 
 namespace LibrarySystem
 {
@@ -13,30 +7,29 @@ namespace LibrarySystem
     public class Library
     {
         // Properties
-        private static Library LibraryInstance;
-        private BookController BookController;
-        private UserController UserController;
+        private static Library libraryInstance;
+        private BookController bookController;
+        private UserController userController;
         private LibrarianController LibrarianController;
-
 
         // This constructor is used to create an instance of a library. Each instance of a library generates an instance of each controller required to access all the functionality.
         public Library()
         {
-            BookController = new BookController();
-            UserController = new UserController();
+            bookController = new BookController();
+            userController = new UserController();
             LibrarianController = new LibrarianController();
         }
 
         // Method to access the book controller from the main window.
         public BookController GetBookController()
         {
-            return BookController;
+            return bookController;
         }
 
         // Method to access the user controller from the main window.
         public UserController GetUserController()
         {
-            return UserController;
+            return userController;
         }
 
         // Method to access the book controller from the main window.
@@ -48,11 +41,11 @@ namespace LibrarySystem
         // Static method to get the instance of the library when navigating between windows.
         public static Library GetInstance()
         {
-            if (LibraryInstance == null)
+            if (libraryInstance == null)
             {
-                LibraryInstance = new Library();
+                libraryInstance = new Library();
             }
-            return LibraryInstance;
+            return libraryInstance;
         }
 
         // This method is used to borrow a book.
@@ -72,17 +65,21 @@ namespace LibrarySystem
             {
                 double fineAmount = (double)numberOfOverdueBooks * 2.00;
                 user.setFine(fineAmount);
-                return "You currently have overdue books. Please see a librarian to pay your late fees before borrowing another book.";
+                return "You currently have overdue books. Please see a librarian to return your overdue books and pay your late fees before borrowing another book.";
+            }
+            else if(user.Fine > 0)
+            {
+                return "You currently have outstanding fines. Please see a librarian to pay your late fees before borrowing another book.";
             }
 
             else
             {
                 if (bookToBorrow.AccessToAvailabilityStatus == Book.BookState.Available)
                 {
-                    if (UserController.CanBorrowMoreBooks(user))
+                    if (userController.CanBorrowMoreBooks(user))
                     {
                         bookToBorrow.SetBookStateToBorrowed();
-                        bookToBorrow.SetDueDateToPast();
+                        bookToBorrow.SetDueDate();
                         user.GetBorrowedBooks().Add(bookToBorrow);
                         if (bookToBorrow.AccessToBorrowedBy == null)
                         {
@@ -107,7 +104,7 @@ namespace LibrarySystem
         // This method is used to return a book.
         public string ReturnBook(Book bookToReturn, User user)
         {
-            if (user.AccessToBorrowedBooks.Contains(bookToReturn))
+            if (user.BorrowedBooks.Contains(bookToReturn))
             {
                 switch (bookToReturn.AccessToAvailabilityStatus)
                 {
@@ -134,13 +131,13 @@ namespace LibrarySystem
         }
 
         // This method is used to get users who are borrowing a book.
-        public List<User> GetUsersBorrowingBook(Book book)
+        public List<User> GetUsersBorrowingBooks(Book book)
         {
             List<User> usersBorrowing = new List<User>();
 
-            foreach (User user in UserController.GetListOfAllUsersWithBorrowedBooks())
+            foreach (User user in userController.GetListOfAllUsersWithBorrowedBooks())
             {
-                if (user.AccessToBorrowedBooks.Contains(book))
+                if (user.BorrowedBooks.Contains(book))
                 {
                     usersBorrowing.Add(user);
                 }
@@ -151,7 +148,7 @@ namespace LibrarySystem
         // This method is used to add fine amounts to user accounts.
         public double AddFine(User user, double fineAmount)
         {
-            double Fine = user.AccessToFine;
+            double Fine = user.Fine;
             if (fineAmount >= 0 && fineAmount <= 6)
             {
                 Fine += fineAmount;
@@ -171,7 +168,7 @@ namespace LibrarySystem
         // This method is used to pay off fine. Can be paid off in installments.
         public double PayFine(User user, double amountToPay)
         {
-            double Fine = user.AccessToFine;
+            double Fine = user.Fine;
             if (amountToPay == Fine)
             {
                 Fine -= amountToPay;
@@ -194,6 +191,19 @@ namespace LibrarySystem
             {
                 return -3;
             }
+        }
+
+        // This method is used to find the users selected book in the users borrowed list.
+        public Book FindBookInUsersBorrowedList(string libraryReferenceNubmer, User user)
+        {
+            foreach (Book book in user.GetBorrowedBooks())
+            {
+                if (book.AccessToLibraryReferenceNumber == libraryReferenceNubmer)
+                {
+                    return book;
+                }
+            }
+            return null;
         }
     }
 }

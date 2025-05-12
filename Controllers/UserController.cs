@@ -1,37 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using LibrarySystem.Entities;
-using static LibrarySystem.Book;
+﻿using LibrarySystem.Entities;
 
 namespace LibrarySystem.Controllers
 {
     public class UserController
     {
+        // Properties.
         private User currentUser;
-        private List<User> listOfAllUsers = new List<User>();
-        private List<User> listOfAllUsersWithBorrowedBooks = new List<User>();
+        private List<User> allUsers = new List<User>();
+        private List<User> allUsersWithBorrowedBooks = new List<User>();
 
         // This method is used to prepoluate the list of users when the application is launched.
         public void PrePopulateUsers()
         {
-            listOfAllUsers.Add(new User("U295684130", "James Doe", "jamesdoe@email.com"));
-            listOfAllUsers.Add(new User("U804736591", "Charlie Evans", "charlie@email.com"));
-            listOfAllUsers.Add(new User("U612905738", "Alice Johnson", "alicejohnson@email.com"));
-            listOfAllUsers.Add(new User("U731259846", "Bob Smith", "bobsmith@email.com"));
-            listOfAllUsers.Add(new User("U854970312", "Diana Lee", "dianalee@email.com"));
-            listOfAllUsers.Add(new User("U417263890", "Ethan Brown", "ethanbrown@email.com"));
+            allUsers.Add(new User("U295684130", "James Doe", "jamesdoe@email.com"));
+            allUsers.Add(new User("U804736591", "Charlie Evans", "charlie@email.com"));
+            allUsers.Add(new User("U612905738", "Alice Johnson", "alicejohnson@email.com"));
+            allUsers.Add(new User("U731259846", "Bob Smith", "bobsmith@email.com"));
+            allUsers.Add(new User("U854970312", "Diana Lee", "dianalee@email.com"));
+            allUsers.Add(new User("U417263890", "Ethan Brown", "ethanbrown@email.com"));
         }
 
         // This method is used to confirm user library number.
         public bool CheckUserLibraryNumber(string idNumber)
         {
-            foreach (User user in listOfAllUsers)
+            foreach (User user in allUsers)
             {
-                if (idNumber == user.AccessToUserLibraryNumber)
+                if (idNumber == user.UserLibraryNumber)
                 {
                     return true;
                 }
@@ -42,9 +36,9 @@ namespace LibrarySystem.Controllers
         // This method is used to find a user in the list of users by comparing user library numbers.
         public User GetUserByLibraryNumber(string userLibraryNumber)
         {
-            foreach (User user in listOfAllUsers)
+            foreach (User user in allUsers)
             {
-                if (userLibraryNumber == user.AccessToUserLibraryNumber)
+                if (userLibraryNumber == user.UserLibraryNumber)
                 {
                     return user;
                 }
@@ -68,7 +62,7 @@ namespace LibrarySystem.Controllers
         public bool CanBorrowMoreBooks(User user)
 
         {
-            if (user.AccessToNumberOfBorrowedBooks >= 3)
+            if (user.NumberOfBorrowedBooks >= 3)
             {
                 return false;
             }
@@ -81,28 +75,28 @@ namespace LibrarySystem.Controllers
         // this method is used to return a list of all the users in the library system.
         public List<User> GetListOfAllUsers()
         {
-            return listOfAllUsers;
+            return allUsers;
         }
 
         // This method is update and return a list of all users with borrowed books.
         public List<User> GetListOfAllUsersWithBorrowedBooks()
         {
-            foreach(User user in listOfAllUsers)
+            foreach(User user in allUsers)
             {
-                if(user.AccessToNumberOfBorrowedBooks > 0)
+                if(user.NumberOfBorrowedBooks > 0)
                 {
-                    listOfAllUsersWithBorrowedBooks.Add(user);
+                    allUsersWithBorrowedBooks.Add(user);
                 }
             }
-            return listOfAllUsersWithBorrowedBooks;
+            return allUsersWithBorrowedBooks;
         }
 
         // This method is used to find the selected user in the library system user list.
         public User FindUserInAllUsers(string UserLibraryNumber)
         {
-            foreach (User user in listOfAllUsers)
+            foreach (User user in allUsers)
             {
-                if (user.AccessToUserLibraryNumber == UserLibraryNumber)
+                if (user.UserLibraryNumber == UserLibraryNumber)
                 {
                     return user;
                 }
@@ -111,15 +105,15 @@ namespace LibrarySystem.Controllers
         }
 
         // This method is used to delete the selected user from the list of all users.
-        public void DeleteUser(User userToDelete)
+        public void DeleteUser(User user)
         {
-            listOfAllUsers.Remove(userToDelete);
+            allUsers.Remove(user);
         }
 
         // This method is used to add a user to the list of all users.
         public void AddUser(string userLibraryNumber, string userName, string userEmail)
         {
-            listOfAllUsers.Add(new User(userLibraryNumber, userName, userEmail));
+            allUsers.Add(new User(userLibraryNumber, userName, userEmail));
         }
 
         // This method is used to filter users by a keyword and store them in a new instance of a user list.
@@ -127,9 +121,9 @@ namespace LibrarySystem.Controllers
         {
             List<User> usersFilteredByKeyword = new List<User>();
 
-            foreach (User user in listOfAllUsers)
+            foreach (User user in allUsers)
             {
-                if (user.AccessToUserName.Contains(keyword, StringComparison.OrdinalIgnoreCase) || user.AccessToUserLibraryNumber.Contains(keyword, StringComparison.OrdinalIgnoreCase) || user.AccessToUserEmail.Contains(keyword, StringComparison.OrdinalIgnoreCase))
+                if (user.Name.Contains(keyword, StringComparison.OrdinalIgnoreCase) || user.UserLibraryNumber.Contains(keyword, StringComparison.OrdinalIgnoreCase) || user.Email.Contains(keyword, StringComparison.OrdinalIgnoreCase))
                 {
                     usersFilteredByKeyword.Add(user);
                 }

@@ -1,29 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace LibrarySystem
+﻿namespace LibrarySystem
 {
     // This class is abstract as it will never need to be instantiated and is a base class for other derived classes.
     public abstract class Person
     {
         // Properties. Set to protected so that derived classes can still access the properties as needed.
-        protected string UserLibraryNumber;
-        protected string UserName;
-        protected string UserEmail;
-        protected int NumberOfBorrowedBooks;
-        protected List<Book>? BorrowedBooks;
+        private string name;
+        private string email;
 
         // This constructor is used as a base blueprint for the constructor of a derived classes.
-        public Person(string userLibraryNumber, string userName, string userEmail)
+        public Person(string personName, string personEmail)
         {
-            UserLibraryNumber = userLibraryNumber;
-            UserName = userName;
-            UserEmail = userEmail; 
-            NumberOfBorrowedBooks = 0;
-            BorrowedBooks = new List<Book>();
+            name = personName;
+            email = personEmail;
+        }
+        // These getters are used to facilitate access to the properties.
+        public string Name
+        {
+            get { return name; }
+        }
+        public string Email
+        {
+            get { return email; }
         }
     }
 }

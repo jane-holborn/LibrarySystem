@@ -1,39 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using LibrarySystem.Entities;
+﻿using LibrarySystem.Entities;
 
 namespace LibrarySystem.Controllers
 {
     public class BookController
     {
-        private List<Book> ListOfAllBooks = new List<Book>();
-        private List<Book> ListOfBorrowedBooks = new List<Book>();
-        private List<Book> ListOfOverdueBooks = new List<Book>();
-        private List<Book> ListOfLostBooks = new List<Book>();
+        // Properties.
+        private List<Book> allBooks = new List<Book>();
+        private List<Book> borrowedBooks = new List<Book>();
+        private List<Book> overdueBooks = new List<Book>();
+        private List<Book> lostBooks = new List<Book>();
 
         // This method is used to prepoluate the list of books when the application is launched.
         public void PrePopulateBooks()
         {
-            ListOfAllBooks.Add(new Book("Harry Potter and the Philosopher's Stone", "J.K.Rowling", "1997", "LRN2653675141"));
-            ListOfAllBooks.Add(new Book("Harry Potter and the Chamber of Secrets", "J.K.Rowling", "1998", "LRN1948375620"));
-            ListOfAllBooks.Add(new Book("Harry Potter and the Prisoner of Azkaban", "J.K.Rowling", "1999", "LRN1948375620"));
-            ListOfAllBooks.Add(new Book("Harry Potter and the Goblet of Fire", "J.K.Rowling", "2000", "LRN4827361950"));
-            ListOfAllBooks.Add(new Book("Harry Potter and the Order of the Phoenix", "J.K.Rowling", "2003", "LRN9273846102"));
-            ListOfAllBooks.Add(new Book("Harry Potter and the Half-Blood Prince", "J.K.Rowling", "2005", "LRN4927835610"));
-            ListOfAllBooks.Add(new Book("Harry Potter and the Deathly Hallows", "J.K.Rowling", "2007", "LRN6273846102"));
-            ListOfAllBooks.Add(new Book("Catcher in the Rye", "J.D. Salinger", "1951", "LRN7543443912"));
-            ListOfAllBooks.Add(new Book("The Hunger Games", "Suzanne Collins", "2008", "LRN4335678217"));
-            ListOfAllBooks.Add(new Book("CatchingFire", "Suzanne Collins", "2009", "LRN8354976210"));
-            ListOfAllBooks.Add(new Book("Mockingjay", "Suzanne Collins", "2010", "LRN6728401953"));
-            ListOfAllBooks.Add(new Book("Wool", "Hugh Howey", "2011", "LRN1364521907"));
-            ListOfAllBooks.Add(new Book("Shift", "Hugh Howey", "2013", "LRN8492037482"));
-            ListOfAllBooks.Add(new Book("Dust", "Hugh Howey", "2013", "LRN5079128436"));
-            ListOfAllBooks.Add(new Book("One Flew Over the Cuckoo's Nest", "Ken Kesey", "1962", "LRN3569871204"));
+            allBooks.Add(new Book("Harry Potter and the Philosopher's Stone", "J.K.Rowling", "1997", "LRN2653675141"));
+            allBooks.Add(new Book("Harry Potter and the Chamber of Secrets", "J.K.Rowling", "1998", "LRN1948375620"));
+            allBooks.Add(new Book("Harry Potter and the Prisoner of Azkaban", "J.K.Rowling", "1999", "LRN1948375620"));
+            allBooks.Add(new Book("Harry Potter and the Goblet of Fire", "J.K.Rowling", "2000", "LRN4827361950"));
+            allBooks.Add(new Book("Harry Potter and the Order of the Phoenix", "J.K.Rowling", "2003", "LRN9273846102"));
+            allBooks.Add(new Book("Harry Potter and the Half-Blood Prince", "J.K.Rowling", "2005", "LRN4927835610"));
+            allBooks.Add(new Book("Harry Potter and the Deathly Hallows", "J.K.Rowling", "2007", "LRN6273846102"));
+            allBooks.Add(new Book("Catcher in the Rye", "J.D. Salinger", "1951", "LRN7543443912"));
+            allBooks.Add(new Book("The Hunger Games", "Suzanne Collins", "2008", "LRN4335678217"));
+            allBooks.Add(new Book("CatchingFire", "Suzanne Collins", "2009", "LRN8354976210"));
+            allBooks.Add(new Book("Mockingjay", "Suzanne Collins", "2010", "LRN6728401953"));
+            allBooks.Add(new Book("Wool", "Hugh Howey", "2011", "LRN1364521907"));
+            allBooks.Add(new Book("Shift", "Hugh Howey", "2013", "LRN8492037482"));
+            allBooks.Add(new Book("Dust", "Hugh Howey", "2013", "LRN5079128436"));
+            allBooks.Add(new Book("One Flew Over the Cuckoo's Nest", "Ken Kesey", "1962", "LRN3569871204"));
         }
 
         // This method is used to filter books by a title and stores them in a new instance of a book list.
@@ -41,7 +35,7 @@ namespace LibrarySystem.Controllers
         {
             List<Book> booksFilteredByTitle = new List<Book>();
 
-            foreach(Book book in ListOfAllBooks)
+            foreach(Book book in allBooks)
                 {
                     if(book.AccessToTitle.Contains(title, StringComparison.OrdinalIgnoreCase))
                     {  
@@ -56,7 +50,7 @@ namespace LibrarySystem.Controllers
         {
             List<Book> booksFilteredByAuthor = new List<Book>();
 
-            foreach (Book book in ListOfAllBooks)
+            foreach (Book book in allBooks)
             {
                 if (book.AccessToAuthor.Contains(author, StringComparison.OrdinalIgnoreCase))
                 {
@@ -71,7 +65,7 @@ namespace LibrarySystem.Controllers
         {
             List<Book> booksFilteredByKeyword = new List<Book>();
 
-            foreach (Book book in ListOfAllBooks)
+            foreach (Book book in allBooks)
             {
                 if (book.AccessToTitle.Contains(keyword, StringComparison.OrdinalIgnoreCase) || book.AccessToAuthor.Contains(keyword, StringComparison.OrdinalIgnoreCase))
                 {
@@ -84,7 +78,7 @@ namespace LibrarySystem.Controllers
         // This method is used to find the selected book in the library system book list.
         public Book FindBookInAllBooks(string libraryReferenceNumber)
         {
-            foreach(Book book in ListOfAllBooks)
+            foreach(Book book in allBooks)
             {
                 if (book.AccessToLibraryReferenceNumber == libraryReferenceNumber)
                 {
@@ -94,90 +88,83 @@ namespace LibrarySystem.Controllers
             return null;
         }
 
-        // This method is used to find the users selected book in the users borrowed list.
-        public Book FindBookInUsersBorrowedlist(string libraryReferenceNubmer, User user)
-        {
-            foreach(Book book in user.GetBorrowedBooks())
-            {
-                if(book.AccessToLibraryReferenceNumber == libraryReferenceNubmer)
-                {
-                    return book;
-                }
-            }
-            return null;
-        }
-
         // This method is used to return the list of all books.
-        public List<Book> GetListOfAllBooks()
+        public List<Book> GetAllBooks()
         {
-            return ListOfAllBooks;
+            return allBooks;
         }
 
         // This method is used to get a list of all the borrowed books.
-        public List<Book> GetListOfAllBorrowedBooks()
+        public List<Book> GetAllBorrowedBooks()
         {
-            ListOfBorrowedBooks.Clear();
+            borrowedBooks.Clear();
             CheckForOverdueBooks();
-            foreach (Book book in ListOfAllBooks)
+            foreach (Book book in allBooks)
             {
                 if (book.AccessToAvailabilityStatus == Book.BookState.Borrowed)
                 {
-                    ListOfBorrowedBooks.Add(book);
+                    borrowedBooks.Add(book);
                 }
             }
-            return ListOfBorrowedBooks;
+            return borrowedBooks;
+        }
+
+        public List<User>? GetAccessToBorrowedBy(Book book)
+        {
+            return book.AccessToBorrowedBy;
         }
 
         // This method is used to get a list of all the overdue books.
-        public List<Book> GetListOfAllOverdueBooks()
+        public List<Book> GetAllOverdueBooks()
         {
-            ListOfOverdueBooks.Clear();
+            overdueBooks.Clear();
             CheckForOverdueBooks();
-            foreach (Book book in ListOfAllBooks)
+            foreach (Book book in allBooks)
             {
                 if (book.AccessToAvailabilityStatus == Book.BookState.Overdue)
                 {
-                    ListOfOverdueBooks.Add(book);
+                    overdueBooks.Add(book);
                 }
             }
-            return ListOfOverdueBooks;
+            return overdueBooks;
         }
 
         // This method is used to get a list of all the lost books.
-        public List<Book> GetlistOfAllLostBooks()
+        public List<Book> GetAllLostBooks()
         {
-            ListOfLostBooks.Clear();
-            foreach (Book book in ListOfAllBooks)
+            lostBooks.Clear();
+            foreach (Book book in allBooks)
             {
                 if (book.AccessToAvailabilityStatus == Book.BookState.Lost)
                 {
-                    ListOfLostBooks.Add(book);
+                    lostBooks.Add(book);
                 }
             }
-            return ListOfLostBooks;
+            return lostBooks;
         }
 
-        public void DeleteBookFromListOfLostBooks(Book bookToRemove)
+        // This method is used to delete the selected book from the list of lost books.
+        public void DeleteBookFromLostBooks(Book book)
         {
-            ListOfLostBooks.Remove(bookToRemove);
+            lostBooks.Remove(book);
         }
 
         // This method is used to delete the selected book from the list of all books.
-        public void DeleteBook(Book bookToDelete)
+        public void DeleteBook(Book book)
         {
-            ListOfAllBooks.Remove(bookToDelete);
+            allBooks.Remove(book);
         }
 
         // This method is used to add a book to the list of all books.
         public void AddBook(string title, string author, string publicationDate, string libraryReferenceNumber)
         {
-            ListOfAllBooks.Add(new Book(title, author,publicationDate, libraryReferenceNumber));
+            allBooks.Add(new Book(title, author,publicationDate, libraryReferenceNumber));
         }
 
         // This method is used to check for overdue books and update the state of any books with a due date that has passed.
         public void CheckForOverdueBooks()
         {
-            foreach (Book book in ListOfAllBooks)
+            foreach (Book book in allBooks)
             {
                 if (book.AccessToDueDate < DateTime.Now && book.GetBookState() == Book.BookState.Borrowed)
                 {

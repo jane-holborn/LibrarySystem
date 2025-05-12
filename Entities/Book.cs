@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using LibrarySystem.Entities;
+﻿using LibrarySystem.Entities;
 
 namespace LibrarySystem
 {
@@ -19,107 +14,108 @@ namespace LibrarySystem
         }
 
         // Properties.
-        private string Title;
-        private string Author;
-        private string LibraryReferenceNumber;
-        private string PublicationDate;
-        private BookState State;
-        private DateTime? DueDate;
-        private List<User>? BorrowedBy;
+        private string title;
+        private string author;
+        private string libraryReferenceNumber;
+        private string publicationDate;
+        private BookState state;
+        private DateTime? dueDate;
+        private List<User>? borrowedBy;
 
         // This constructor is used to add a new book to the library.
-        public Book(string title, string author, string publicationDate, string libraryReferenceNumber)
+        public Book(string bookTitle, string bookAuthor, string publishDate, string referenceNumber)
         {
-            Title = title;
-            Author = author;
-            PublicationDate = publicationDate;
-            LibraryReferenceNumber = libraryReferenceNumber;
-            State = BookState.Available;
+            title = bookTitle;
+            author = bookAuthor;
+            publicationDate = publishDate;
+            libraryReferenceNumber = referenceNumber;
+            state = BookState.Available;
         }
 
         // These getters are used to facilitate access to the properties, in particular for the Data Template.
         public string AccessToTitle
         {
-            get { return Title; }
+            get { return title; }
         }
         public string AccessToAuthor
         {
-            get { return Author; }
+            get { return author; }
         }
         public string AccessToLibraryReferenceNumber
         {
-            get { return LibraryReferenceNumber; }
+            get { return libraryReferenceNumber; }
         }
         
         // Do not remove. This property is being accessed in the UserDashboard Data Template despite the indication of 0 references.
         public string AccessToPublicationDate
         {
-            get { return PublicationDate; }
+            get { return publicationDate; }
         }
         public BookState AccessToAvailabilityStatus
         {
-            get { return State; }
+            get { return state; }
         }
         public DateTime? AccessToDueDate
         {
-            get { return DueDate; }
+            get { return dueDate; }
         }
         public List<User>? AccessToBorrowedBy
         {
-            get { return BorrowedBy;  }
+            get { return borrowedBy;  }
         }
 
         // Setter methods used to set the state of the book and the due date.
         public void SetBookStateToAvailable()
         {
-            State = BookState.Available;
+            state = BookState.Available;
         }
         public void SetBookStateToBorrowed()
         {
-            State = BookState.Borrowed;
+            state = BookState.Borrowed;
         }
         public void SetBookStateToOverdue()
         {
-            State = BookState.Overdue;
+            state = BookState.Overdue;
         }
         public void SetBookStateToLost()
         {
-            State = BookState.Lost;
+            state = BookState.Lost;
         }
         public void SetDueDate()
         { 
-            DueDate = DateTime.Now.AddDays(14);
+            dueDate = DateTime.Now.AddDays(14);
         }
         public void SetBorrowedBy()
         {
-            BorrowedBy = new List<User>();
-        }
-        public void AddUserToBorrowedBy(User user)
-        {
-            BorrowedBy.Add(user);
+            borrowedBy = new List<User>();
         }
 
+        // Methods used to add and remove users from the borrowedBy list.
+        public void AddUserToBorrowedBy(User user)
+        {
+            borrowedBy.Add(user);
+        }
         public void RemoveUserFromBorrowedBy(User user)
         {
-            BorrowedBy.Remove(user);
+            borrowedBy.Remove(user);
         }
 
         // This method is used to clear the due date when returning a book.
         public void ClearDueDate()
         {
-            DueDate = null;
+            dueDate = null;
         }
 
         // This method is used to get the book state.
         public BookState GetBookState()
         {
-            return State;
+            return state;
         }
 
         // This method is used to test and demonstrate the Overdue functionality in the application. It is not used during normal operation.
         public void SetDueDateToPast()
         {
-            DueDate = DateTime.Now.AddDays(-14);
+            dueDate = DateTime.Now.AddDays(-14);
         }
     }
 }

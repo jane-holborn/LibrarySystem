@@ -1,23 +1,12 @@
-﻿using LibrarySystem.Controllers;
-using LibrarySystem.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using LibrarySystem.Entities;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace LibrarySystem
 {
     public partial class UserDashboard : Window
     {
+        private Book? selectedBook;
         private MainWindow mainWindow;
 
         // This constructor is used to create a new instance of the User dashboard.
@@ -26,8 +15,6 @@ namespace LibrarySystem
             InitializeComponent();
             mainWindow = mainWindowInstance;
         }
-
-        private Book? selectedBook;
 
         // This button click event is used to carry out a search by title. It calls a method held in the BookController class.
         private void ButtonSearchByTitle_Click(object sender, RoutedEventArgs e)
@@ -131,13 +118,13 @@ namespace LibrarySystem
 
             currentUser.setFine(fineAmount);
                     
-            if (BorrowedBooks.Count > 0 && currentUser.AccessToFine > 0)
+            if (BorrowedBooks.Count > 0 && currentUser.Fine > 0)
             {
                 ListBoxBooks.ItemsSource = BorrowedBooks;
                 TextBoxSearch.Text = null;
-                TextBlockStatus.Text = $"The books you currently have on loan, and their due dates, are listed above. You have outstanding fines to the sum of ${currentUser.AccessToFine}.";
+                TextBlockStatus.Text = $"The books you currently have on loan, and their due dates, are listed above. You have outstanding fines to the sum of ${currentUser.Fine}.";
             }
-            else if (BorrowedBooks.Count > 0 && currentUser.AccessToFine == 0)
+            else if (BorrowedBooks.Count > 0 && currentUser.Fine == 0)
             {
                 ListBoxBooks.ItemsSource = BorrowedBooks;
                 TextBoxSearch.Text = null;
@@ -157,7 +144,7 @@ namespace LibrarySystem
             {
                 Book selectedBookFromSearchResults = (Book)ListBoxBooks.SelectedItem;
                 User currentUser = Library.GetInstance().GetUserController().GetCurrentUser();
-                Book bookInUsersBorrowedList = Library.GetInstance().GetBookController().FindBookInUsersBorrowedlist(selectedBookFromSearchResults.AccessToLibraryReferenceNumber, currentUser);
+                Book bookInUsersBorrowedList = Library.GetInstance().FindBookInUsersBorrowedList(selectedBookFromSearchResults.AccessToLibraryReferenceNumber, currentUser);
 
                 if (bookInUsersBorrowedList != null)
                 {
