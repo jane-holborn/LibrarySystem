@@ -1,4 +1,5 @@
 ﻿using LibrarySystem.Entities;
+using System.Collections.ObjectModel;
 
 namespace LibrarySystem.Controllers
 {
@@ -6,7 +7,7 @@ namespace LibrarySystem.Controllers
     {
         // Properties.
         private User currentUser;
-        private List<User> allUsers = new List<User>();
+        private ObservableCollection<User> allUsers = new ObservableCollection<User>();
         private List<User> allUsersWithBorrowedBooks = new List<User>();
 
         // This method is used to prepoluate the list of users when the application is launched.
@@ -73,7 +74,7 @@ namespace LibrarySystem.Controllers
         }
         
         // this method is used to return a list of all the users in the library system.
-        public List<User> GetListOfAllUsers()
+        public ObservableCollection<User> GetListOfAllUsers()
         {
             return allUsers;
         }

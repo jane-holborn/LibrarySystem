@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Collections.ObjectModel;
+using System.Windows;
 using LibrarySystem.Entities;
 
 namespace LibrarySystem
@@ -29,7 +30,7 @@ namespace LibrarySystem
         private void ButtonAllBooks_Click(object sender, RoutedEventArgs e)
         {
             Library.GetInstance().GetBookController().CheckForOverdueBooks();
-            List<Book> listOfAllBooks = Library.GetInstance().GetBookController().GetAllBooks();
+            ObservableCollection<Book> listOfAllBooks = Library.GetInstance().GetBookController().GetAllBooks();
             if (listOfAllBooks.Count > 0)
             {
                 ListBoxBooks.ItemsSource = listOfAllBooks;
@@ -65,7 +66,7 @@ namespace LibrarySystem
         private void ButtonAllUsers_Click(object sender, RoutedEventArgs e)
         {
             Library.GetInstance().GetBookController().CheckForOverdueBooks();
-            List<User> listOfAllUsers = Library.GetInstance().GetUserController().GetListOfAllUsers();
+            ObservableCollection<User> listOfAllUsers = Library.GetInstance().GetUserController().GetListOfAllUsers();
             foreach (User user in listOfAllUsers)
             {
                 int numberOfOverdueBooks = 0;
@@ -185,7 +186,6 @@ namespace LibrarySystem
                 TextBoxAuthor.Clear();
                 TextBoxPublicationDate.Clear();
                 TextBoxLibraryReferenceNumber.Clear();
-                ListBoxBooks.ItemsSource = null;
             }
             else
             {
@@ -210,7 +210,6 @@ namespace LibrarySystem
                     {
                         Library.GetInstance().GetBookController().DeleteBook(bookInLibrarySystem);
                         TextBlockStatus.Text = $"The book {bookInLibrarySystem.AccessToTitle} has been permanently deleted from the system.";
-                        ListBoxBooks.ItemsSource = null;
                     }
                     else
                     {
@@ -252,7 +251,6 @@ namespace LibrarySystem
                 TextBoxUserLibraryNumber.Clear();
                 TextBoxUserName.Clear();
                 TextBoxUserEmail.Clear();
-                ListBoxUsers.ItemsSource = null;
             }
             else
             {
@@ -278,7 +276,6 @@ namespace LibrarySystem
                     {
                         Library.GetInstance().GetUserController().DeleteUser(userInLibrarySystem);
                         TextBlockStatus.Text = $"The user {userInLibrarySystem.Name} has been permanently deleted from the system.";
-                        ListBoxUsers.ItemsSource = null;
                     }
                     else
                     {

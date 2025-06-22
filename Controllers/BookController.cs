@@ -1,11 +1,12 @@
 ﻿using LibrarySystem.Entities;
+using System.Collections.ObjectModel;
 
 namespace LibrarySystem.Controllers
 {
     public class BookController
     {
         // Properties.
-        private List<Book> allBooks = new List<Book>();
+        private ObservableCollection<Book> allBooks = new ObservableCollection<Book>();
         private List<Book> borrowedBooks = new List<Book>();
         private List<Book> overdueBooks = new List<Book>();
         private List<Book> lostBooks = new List<Book>();
@@ -89,7 +90,7 @@ namespace LibrarySystem.Controllers
         }
 
         // This method is used to return the list of all books.
-        public List<Book> GetAllBooks()
+        public ObservableCollection<Book> GetAllBooks()
         {
             return allBooks;
         }
