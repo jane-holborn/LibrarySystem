@@ -55,7 +55,7 @@ namespace LibrarySystem
 
             foreach (Book book in user.GetBorrowedBooks())
             {
-                if (book.AccessToAvailabilityStatus == Book.BookState.Overdue)
+                if (book.AvailabilityStatus == Book.BookState.Overdue)
                 {
                     numberOfOverdueBooks++;
                 }
@@ -74,20 +74,20 @@ namespace LibrarySystem
 
             else
             {
-                if (bookToBorrow.AccessToAvailabilityStatus == Book.BookState.Available)
+                if (bookToBorrow.AvailabilityStatus == Book.BookState.Available)
                 {
                     if (userController.CanBorrowMoreBooks(user))
                     {
                         bookToBorrow.SetBookStateToBorrowed();
                         bookToBorrow.SetDueDate();
                         user.GetBorrowedBooks().Add(bookToBorrow);
-                        if (bookToBorrow.AccessToBorrowedBy == null)
+                        if (bookToBorrow.BorrowedBy == null)
                         {
-                            bookToBorrow.SetBorrowedBy();
+                            bookToBorrow.SetBorrowedBy(user);
                         }
                         bookToBorrow.AddUserToBorrowedBy(user);
                         user.IncreaseNumberOfBorrowedBooks();
-                        return $"You have successfully borrowed {bookToBorrow.AccessToTitle}";
+                        return $"You have successfully borrowed {bookToBorrow.Title}";
                     }
                     else
                     {
@@ -106,7 +106,7 @@ namespace LibrarySystem
         {
             if (user.BorrowedBooks.Contains(bookToReturn))
             {
-                switch (bookToReturn.AccessToAvailabilityStatus)
+                switch (bookToReturn.AvailabilityStatus)
                 {
                     case Book.BookState.Borrowed:
                         bookToReturn.SetBookStateToAvailable();
@@ -114,7 +114,7 @@ namespace LibrarySystem
                         user.GetBorrowedBooks().Remove(bookToReturn);
                         bookToReturn.RemoveUserFromBorrowedBy(user);
                         user.DecreaseNumberOfBorrowedBooks();
-                        return $"You have successfully returned {bookToReturn.AccessToTitle}";
+                        return $"You have successfully returned {bookToReturn.Title}";
                     case Book.BookState.Overdue:
                         return "Please see a librarian to pay your late fees before returning the book.";
                     case Book.BookState.Lost:
@@ -198,7 +198,7 @@ namespace LibrarySystem
         {
             foreach (Book book in user.GetBorrowedBooks())
             {
-                if (book.AccessToLibraryReferenceNumber == libraryReferenceNubmer)
+                if (book.LibraryReferenceNumber == libraryReferenceNubmer)
                 {
                     return book;
                 }

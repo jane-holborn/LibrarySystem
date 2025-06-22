@@ -1,4 +1,5 @@
 ﻿using LibrarySystem.Entities;
+using System.Collections.ObjectModel;
 
 namespace LibrarySystem
 {
@@ -20,7 +21,7 @@ namespace LibrarySystem
         private string publicationDate;
         private BookState state;
         private DateTime? dueDate;
-        private List<User>? borrowedBy;
+        private User borrowedBy;
 
         // This constructor is used to add a new book to the library.
         public Book(string bookTitle, string bookAuthor, string publishDate, string referenceNumber)
@@ -33,35 +34,52 @@ namespace LibrarySystem
         }
 
         // These getters are used to facilitate access to the properties, in particular for the Data Template.
-        public string AccessToTitle
+        public string Title
         {
             get { return title; }
         }
-        public string AccessToAuthor
+        public string Author
         {
             get { return author; }
         }
-        public string AccessToLibraryReferenceNumber
+        public string LibraryReferenceNumber
         {
             get { return libraryReferenceNumber; }
         }
         
         // Do not remove. This property is being accessed in the UserDashboard Data Template despite the indication of 0 references.
-        public string AccessToPublicationDate
+        public string PublicationDate
         {
             get { return publicationDate; }
         }
-        public BookState AccessToAvailabilityStatus
+        public BookState AvailabilityStatus
         {
             get { return state; }
         }
-        public DateTime? AccessToDueDate
+        public DateTime? DueDate
         {
             get { return dueDate; }
         }
-        public List<User>? AccessToBorrowedBy
+
+        public IEnumerable<User> BorrowedByList
         {
-            get { return borrowedBy;  }
+            get
+            {
+                if (borrowedBy == null)
+                {
+                    return new List<User> { User.noBorrower };
+                }
+                return new List<User> { borrowedBy };
+            }
+        }
+        public User BorrowedBy
+        {
+            get {
+                if (borrowedBy == null)
+                {
+                    return User.noBorrower;
+                }
+                return borrowedBy;  }
         }
 
         // Setter methods used to set the state of the book and the due date.
@@ -85,19 +103,19 @@ namespace LibrarySystem
         { 
             dueDate = DateTime.Now.AddDays(14);
         }
-        public void SetBorrowedBy()
+        public void SetBorrowedBy(User user)
         {
-            borrowedBy = new List<User>();
+            borrowedBy = user;
         }
 
         // Methods used to add and remove users from the borrowedBy list.
         public void AddUserToBorrowedBy(User user)
         {
-            borrowedBy.Add(user);
+            borrowedBy = user;
         }
         public void RemoveUserFromBorrowedBy(User user)
         {
-            borrowedBy.Remove(user);
+            borrowedBy = User.noBorrower;
         }
 
         // This method is used to clear the due date when returning a book.

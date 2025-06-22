@@ -72,7 +72,7 @@ namespace LibrarySystem
                 int numberOfOverdueBooks = 0;
                 foreach (Book book in user.GetBorrowedBooks())
                 {
-                    if (book.AccessToAvailabilityStatus == Book.BookState.Overdue)
+                    if (book.AvailabilityStatus == Book.BookState.Overdue)
                     {
                         numberOfOverdueBooks++;
                     }
@@ -111,7 +111,7 @@ namespace LibrarySystem
             if (ListBoxBooks.SelectedItem != null)
             {
                 Book selectedBookFromSearchResults = (Book)ListBoxBooks.SelectedItem;
-                Book bookInLibrarySystem = Library.GetInstance().GetBookController().FindBookInAllBooks(selectedBookFromSearchResults.AccessToLibraryReferenceNumber);
+                Book bookInLibrarySystem = Library.GetInstance().GetBookController().FindBookInAllBooks(selectedBookFromSearchResults.LibraryReferenceNumber);
 
                 // If the book is in a users borrowed book list, will need to remove from that list.
                 bookInLibrarySystem.SetBookStateToLost();
@@ -131,14 +131,14 @@ namespace LibrarySystem
             if (ListBoxBooks.SelectedItem != null)
             {
                 Book selectedBookFromSearchResults = (Book)ListBoxBooks.SelectedItem;
-                Book bookInLibrarySystem = Library.GetInstance().GetBookController().FindBookInAllBooks(selectedBookFromSearchResults.AccessToLibraryReferenceNumber);
+                Book bookInLibrarySystem = Library.GetInstance().GetBookController().FindBookInAllBooks(selectedBookFromSearchResults.LibraryReferenceNumber);
                 List<Book> listOfLostBooks = Library.GetInstance().GetBookController().GetAllLostBooks();
-                List<User>? borrowedByUser = Library.GetInstance().GetBookController().GetAccessToBorrowedBy(bookInLibrarySystem);
+                User? borrowedByUser = Library.GetInstance().GetBookController().GetAccessToBorrowedBy(bookInLibrarySystem);
 
                 if (borrowedByUser != null)
                 {
-                    User currentUser = Library.GetInstance().GetUserController().FindUserInAllUsers(borrowedByUser[0].UserLibraryNumber);
-                    Book bookInUsersBorrowedList = Library.GetInstance().FindBookInUsersBorrowedList(selectedBookFromSearchResults.AccessToLibraryReferenceNumber, currentUser);
+                    User currentUser = Library.GetInstance().GetUserController().FindUserInAllUsers(borrowedByUser.UserLibraryNumber);
+                    Book bookInUsersBorrowedList = Library.GetInstance().FindBookInUsersBorrowedList(selectedBookFromSearchResults.LibraryReferenceNumber, currentUser);
                     if (bookInUsersBorrowedList != null && currentUser.Fine == 0)
                     {
                         if (listOfLostBooks.Contains(bookInLibrarySystem))
@@ -200,25 +200,25 @@ namespace LibrarySystem
             if (ListBoxBooks.SelectedItem != null)
             {
                 Book selectedBookFromSearchResults = (Book)ListBoxBooks.SelectedItem;
-                Book bookInLibrarySystem = Library.GetInstance().GetBookController().FindBookInAllBooks(selectedBookFromSearchResults.AccessToLibraryReferenceNumber);
+                Book bookInLibrarySystem = Library.GetInstance().GetBookController().FindBookInAllBooks(selectedBookFromSearchResults.LibraryReferenceNumber);
 
                 // And if the book exists in the library system.
-                if (bookInLibrarySystem.AccessToBorrowedBy == null)
+                if (bookInLibrarySystem.BorrowedBy == null || bookInLibrarySystem.BorrowedBy.Name == "No Borrower")
                 {
                     MessageBoxResult result = MessageBox.Show("This action will delete the selected book from the Library system. This action cannot be undone, do you wish to proceed? Click 'Yes' to delete or 'No' to cancel.", "Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning);
                     if (result == MessageBoxResult.Yes)
                     {
                         Library.GetInstance().GetBookController().DeleteBook(bookInLibrarySystem);
-                        TextBlockStatus.Text = $"The book {bookInLibrarySystem.AccessToTitle} has been permanently deleted from the system.";
+                        TextBlockStatus.Text = $"The book {bookInLibrarySystem.Title} has been permanently deleted from the system.";
                     }
                     else
                     {
-                        TextBlockStatus.Text = $"The book {bookInLibrarySystem.AccessToTitle} has not been deleted.";
+                        TextBlockStatus.Text = $"The book {bookInLibrarySystem.Title} has not been deleted.";
                     }
                 }
                 else
                 {
-                    TextBlockStatus.Text = $"The book {bookInLibrarySystem.AccessToTitle} is currently on loan. Please select another book or try again later once the book is returned.";
+                    TextBlockStatus.Text = $"The book {bookInLibrarySystem.Title} is currently on loan. Please select another book or try again later once the book is returned.";
                 }
             }
             else

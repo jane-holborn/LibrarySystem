@@ -63,7 +63,7 @@ namespace LibrarySystem
             {
                 Book selectedBookFromSearchResults = (Book)ListBoxBooks.SelectedItem;
                 User currentUser = Library.GetInstance().GetUserController().GetCurrentUser();
-                Book bookInLibrarySystem = Library.GetInstance().GetBookController().FindBookInAllBooks(selectedBookFromSearchResults.AccessToLibraryReferenceNumber);
+                Book bookInLibrarySystem = Library.GetInstance().GetBookController().FindBookInAllBooks(selectedBookFromSearchResults.LibraryReferenceNumber);
 
                 // And if the book exists in the library system.
                 if (bookInLibrarySystem != null)
@@ -110,7 +110,7 @@ namespace LibrarySystem
 
             foreach (Book book in BorrowedBooks)
             {
-                if (book.AccessToAvailabilityStatus == Book.BookState.Overdue)
+                if (book.AvailabilityStatus == Book.BookState.Overdue)
                 {
                     fineAmount += 2.00;
                 }
@@ -144,7 +144,7 @@ namespace LibrarySystem
             {
                 Book selectedBookFromSearchResults = (Book)ListBoxBooks.SelectedItem;
                 User currentUser = Library.GetInstance().GetUserController().GetCurrentUser();
-                Book bookInUsersBorrowedList = Library.GetInstance().FindBookInUsersBorrowedList(selectedBookFromSearchResults.AccessToLibraryReferenceNumber, currentUser);
+                Book bookInUsersBorrowedList = Library.GetInstance().FindBookInUsersBorrowedList(selectedBookFromSearchResults.LibraryReferenceNumber, currentUser);
 
                 if (bookInUsersBorrowedList != null)
                 {

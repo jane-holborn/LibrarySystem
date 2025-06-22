@@ -30,17 +30,17 @@
                     <ColumnDefinition Width="Auto"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Row="0" Grid.Column="0" Text="Title: " FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" />
-                <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Path=AccessToTitle}" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" />
+                <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Path=Title}" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" />
                 <TextBlock Grid.Row="1" Grid.Column="0" Text="Author: " FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" />
-                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Path=AccessToAuthor}" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" />
+                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Path=Author}" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" />
                 <TextBlock Grid.Row="2" Grid.Column="0" Text="Library Reference Number: " FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" />
-                <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Path=AccessToLibraryReferenceNumber}" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" />
+                <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Path=LibraryReferenceNumber}" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" />
                 <TextBlock Grid.Row="3" Grid.Column="0" Text="Publication Date: " FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" />
-                <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Path=AccessToPublicationDate}" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" />
+                <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Path=PublicationDate}" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" />
                 <TextBlock Grid.Row="4" Grid.Column="0" Text="Available Status: " FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" />
-                <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding Path=AccessToAvailabilityStatus}" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" />
+                <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding Path=AvailabilityStatus}" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" />
                 <TextBlock Grid.Row="5" Grid.Column="0" Text="Due Date: " FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" />
-                <TextBlock Grid.Row="5" Grid.Column="1" Text="{Binding Path=AccessToDueDate}" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" />
+                <TextBlock Grid.Row="5" Grid.Column="1" Text="{Binding Path=DueDate}" FontFamily="Calibri" FontSize="16" Foreground="#3B3B3B" />
             </Grid>
         </DataTemplate>
     </Window.Resources>

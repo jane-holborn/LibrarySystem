@@ -38,7 +38,7 @@ namespace LibrarySystem.Controllers
 
             foreach(Book book in allBooks)
                 {
-                    if(book.AccessToTitle.Contains(title, StringComparison.OrdinalIgnoreCase))
+                    if(book.Title.Contains(title, StringComparison.OrdinalIgnoreCase))
                     {  
                         booksFilteredByTitle.Add(book);
                     }
@@ -53,7 +53,7 @@ namespace LibrarySystem.Controllers
 
             foreach (Book book in allBooks)
             {
-                if (book.AccessToAuthor.Contains(author, StringComparison.OrdinalIgnoreCase))
+                if (book.Author.Contains(author, StringComparison.OrdinalIgnoreCase))
                 {
                     booksFilteredByAuthor.Add(book);
                 }
@@ -68,7 +68,7 @@ namespace LibrarySystem.Controllers
 
             foreach (Book book in allBooks)
             {
-                if (book.AccessToTitle.Contains(keyword, StringComparison.OrdinalIgnoreCase) || book.AccessToAuthor.Contains(keyword, StringComparison.OrdinalIgnoreCase))
+                if (book.Title.Contains(keyword, StringComparison.OrdinalIgnoreCase) || book.Author.Contains(keyword, StringComparison.OrdinalIgnoreCase))
                 {
                     booksFilteredByKeyword.Add(book);
                 }
@@ -81,7 +81,7 @@ namespace LibrarySystem.Controllers
         {
             foreach(Book book in allBooks)
             {
-                if (book.AccessToLibraryReferenceNumber == libraryReferenceNumber)
+                if (book.LibraryReferenceNumber == libraryReferenceNumber)
                 {
                     return book;
                 }
@@ -102,7 +102,7 @@ namespace LibrarySystem.Controllers
             CheckForOverdueBooks();
             foreach (Book book in allBooks)
             {
-                if (book.AccessToAvailabilityStatus == Book.BookState.Borrowed)
+                if (book.AvailabilityStatus == Book.BookState.Borrowed)
                 {
                     borrowedBooks.Add(book);
                 }
@@ -110,9 +110,9 @@ namespace LibrarySystem.Controllers
             return borrowedBooks;
         }
 
-        public List<User>? GetAccessToBorrowedBy(Book book)
+        public User GetAccessToBorrowedBy(Book book)
         {
-            return book.AccessToBorrowedBy;
+            return book.BorrowedBy;
         }
 
         // This method is used to get a list of all the overdue books.
@@ -122,7 +122,7 @@ namespace LibrarySystem.Controllers
             CheckForOverdueBooks();
             foreach (Book book in allBooks)
             {
-                if (book.AccessToAvailabilityStatus == Book.BookState.Overdue)
+                if (book.AvailabilityStatus == Book.BookState.Overdue)
                 {
                     overdueBooks.Add(book);
                 }
@@ -136,7 +136,7 @@ namespace LibrarySystem.Controllers
             lostBooks.Clear();
             foreach (Book book in allBooks)
             {
-                if (book.AccessToAvailabilityStatus == Book.BookState.Lost)
+                if (book.AvailabilityStatus == Book.BookState.Lost)
                 {
                     lostBooks.Add(book);
                 }
@@ -167,7 +167,7 @@ namespace LibrarySystem.Controllers
         {
             foreach (Book book in allBooks)
             {
-                if (book.AccessToDueDate < DateTime.Now && book.GetBookState() == Book.BookState.Borrowed)
+                if (book.DueDate < DateTime.Now && book.GetBookState() == Book.BookState.Borrowed)
                 {
                     book.SetBookStateToOverdue();
                 }

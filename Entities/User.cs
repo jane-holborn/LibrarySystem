@@ -1,7 +1,12 @@
-﻿namespace LibrarySystem.Entities
+﻿using System.Security.Policy;
+
+namespace LibrarySystem.Entities
 {
     public class User : Person
     {
+        //Field.
+        public static readonly User noBorrower = new User("N/A", "No Borrower", "N/A");
+
         // Property.
         private string userLibraryNumber;
         private int numberOfBorrowedBooks;
