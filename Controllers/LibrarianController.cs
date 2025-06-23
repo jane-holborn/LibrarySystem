@@ -1,4 +1,5 @@
 ﻿using LibrarySystem.Entities;
+using System.Collections.ObjectModel;
 
 namespace LibrarySystem.Controllers
 {
@@ -6,18 +7,7 @@ namespace LibrarySystem.Controllers
     {
         // Properties.
         private Librarian currentLibrarian;
-        private List<Librarian> allLibrarians = new List<Librarian>();
-
-        // This method is used to prepoluate the list of librarians when the application is launched.
-        public void PrePopulateLibrarians()
-        {
-            allLibrarians.Add(new Librarian("L93482617", "Jane Doe", "janedow@email.com"));
-            allLibrarians.Add(new Librarian("L56128394", "John Doe", "johndow@email.com"));
-            allLibrarians.Add(new Librarian("L74290568", "Michael Anderson", "michaelanderson@email.com"));
-            allLibrarians.Add(new Librarian("L38275149", "Olivia Taylor", "oliviataylor@email.com"));
-            allLibrarians.Add(new Librarian("L89562310", "Sophia Harrison", "sophiaharrison@email.com"));
-            allLibrarians.Add(new Librarian("L20458736", "James Richardson", "jamesrichardson@email.com"));
-        }
+        private ObservableCollection<Librarian> allLibrarians = new ObservableCollection<Librarian>();
 
         // This method is used to confirm if librarian staff Id exists in the system.
         public bool CheckLibrarianStaffId(string staffId)
@@ -55,6 +45,18 @@ namespace LibrarySystem.Controllers
         public Librarian GetCurrentLibrarian()
         {
             return currentLibrarian;
+        }
+
+        // This method is used to get the list of all librarians.
+        public ObservableCollection<Librarian> GetAllLibrarians()
+        {
+            return allLibrarians;
+        }
+
+        // This method is used to add a librarian to the list of all librarians.
+        public void AddLibrarian(string staffIdNumber, string librarianName, string LibrarianEmail)
+        {
+            allLibrarians.Add(new Librarian(staffIdNumber, librarianName, LibrarianEmail));
         }
     }
 }

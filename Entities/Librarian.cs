@@ -12,7 +12,7 @@
             staffId = staffIdNumber;
         }
 
-        // These getters are used to facilitate access to the properties.
+        // This getter is used to facilitate access to the properties.
         public string AccessLibrarianStaffId
         {
             get { return staffId; }

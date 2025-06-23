@@ -20,19 +20,19 @@ namespace LibrarySystem
             LibrarianController = new LibrarianController();
         }
 
-        // Method to access the book controller from the main window.
+        // This method is used to access the book controller.
         public BookController GetBookController()
         {
             return bookController;
         }
 
-        // Method to access the user controller from the main window.
+        // This method is used to access the user controller.
         public UserController GetUserController()
         {
             return userController;
         }
 
-        // Method to access the book controller from the main window.
+        // This method is used to access the librarian controller.
         public LibrarianController GetLibrarianController()
         {
             return LibrarianController;
@@ -130,12 +130,12 @@ namespace LibrarySystem
             }
         }
 
-        // This method is used to get users who are borrowing a book.
+        // This method is used to get a list of all users who are borrowing books.
         public List<User> GetUsersBorrowingBooks(Book book)
         {
             List<User> usersBorrowing = new List<User>();
 
-            foreach (User user in userController.GetListOfAllUsersWithBorrowedBooks())
+            foreach (User user in userController.GetAllUsersWithBorrowedBooks())
             {
                 if (user.BorrowedBooks.Contains(book))
                 {
@@ -165,7 +165,7 @@ namespace LibrarySystem
             }
         }
 
-        // This method is used to pay off fine. Can be paid off in installments.
+        // This method is used to pay off fines from user accounts.
         public double PayFine(User user, double amountToPay)
         {
             double Fine = user.Fine;

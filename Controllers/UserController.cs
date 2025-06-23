@@ -10,18 +10,7 @@ namespace LibrarySystem.Controllers
         private ObservableCollection<User> allUsers = new ObservableCollection<User>();
         private List<User> allUsersWithBorrowedBooks = new List<User>();
 
-        // This method is used to prepoluate the list of users when the application is launched.
-        public void PrePopulateUsers()
-        {
-            allUsers.Add(new User("U295684130", "James Doe", "jamesdoe@email.com"));
-            allUsers.Add(new User("U804736591", "Charlie Evans", "charlie@email.com"));
-            allUsers.Add(new User("U612905738", "Alice Johnson", "alicejohnson@email.com"));
-            allUsers.Add(new User("U731259846", "Bob Smith", "bobsmith@email.com"));
-            allUsers.Add(new User("U854970312", "Diana Lee", "dianalee@email.com"));
-            allUsers.Add(new User("U417263890", "Ethan Brown", "ethanbrown@email.com"));
-        }
-
-        // This method is used to confirm user library number.
+        // This method is used to confirm a user exists in the library system by their user library number.
         public bool CheckUserLibraryNumber(string idNumber)
         {
             foreach (User user in allUsers)
@@ -53,13 +42,13 @@ namespace LibrarySystem.Controllers
             currentUser = user;
         }
 
-        // This method is used to get the details of the current librarian.
+        // This method is used to get the details of the current user.
         public User GetCurrentUser()
         {
             return currentUser;
         }
         
-        // This method is used to check how many books a user has on loan to manage the borrow limit for each user.
+        // This method is used to check how many books a user has on loan to manage the borrowing limit for each user.
         public bool CanBorrowMoreBooks(User user)
 
         {
@@ -73,14 +62,14 @@ namespace LibrarySystem.Controllers
             }
         }
         
-        // this method is used to return a list of all the users in the library system.
-        public ObservableCollection<User> GetListOfAllUsers()
+        // This method is used to return a list of all the users in the library system.
+        public ObservableCollection<User> GetAllUsers()
         {
             return allUsers;
         }
 
         // This method is update and return a list of all users with borrowed books.
-        public List<User> GetListOfAllUsersWithBorrowedBooks()
+        public List<User> GetAllUsersWithBorrowedBooks()
         {
             foreach(User user in allUsers)
             {

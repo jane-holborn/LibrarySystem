@@ -37,7 +37,7 @@ namespace LibrarySystem
             }
         }
 
-        // This button click event is used to return a list of all borrowed books. It checks the book state before returning to look for any overdue books.
+        // This button click event is used to return a list of all borrowed books that are no overdue.
         private void ButtonAllBorrowedBooks_Click(object sender, RoutedEventArgs e)
         {
             Library.GetInstance().GetBookController().CheckForOverdueBooks();
@@ -66,7 +66,7 @@ namespace LibrarySystem
         private void ButtonAllUsers_Click(object sender, RoutedEventArgs e)
         {
             Library.GetInstance().GetBookController().CheckForOverdueBooks();
-            ObservableCollection<User> listOfAllUsers = Library.GetInstance().GetUserController().GetListOfAllUsers();
+            ObservableCollection<User> listOfAllUsers = Library.GetInstance().GetUserController().GetAllUsers();
             foreach (User user in listOfAllUsers)
             {
                 int numberOfOverdueBooks = 0;
@@ -90,7 +90,7 @@ namespace LibrarySystem
         // This button click event is used to display a list of all users with borrowed books in the User listbox.
         private void ButtonAllUserBorrowingBooks_Click(object sender, RoutedEventArgs e)
         {
-            List<User> listOfAllusersWithBorrowedBooks = Library.GetInstance().GetUserController().GetListOfAllUsersWithBorrowedBooks();
+            List<User> listOfAllusersWithBorrowedBooks = Library.GetInstance().GetUserController().GetAllUsersWithBorrowedBooks();
             ListBoxUsers.ItemsSource= listOfAllusersWithBorrowedBooks;
         }
 

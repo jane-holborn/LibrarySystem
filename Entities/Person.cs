@@ -13,6 +13,7 @@
             name = personName;
             email = personEmail;
         }
+
         // These getters are used to facilitate access to the properties.
         public string Name
         {

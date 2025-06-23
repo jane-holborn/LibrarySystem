@@ -1,5 +1,4 @@
 ﻿using LibrarySystem.Entities;
-using System.Collections.ObjectModel;
 
 namespace LibrarySystem
 {
@@ -33,34 +32,39 @@ namespace LibrarySystem
             state = BookState.Available;
         }
 
-        // These getters are used to facilitate access to the properties, in particular for the Data Template.
+        // These getters are used to facilitate access to the properties, and are also used in the Data Template.
         public string Title
         {
             get { return title; }
         }
+
         public string Author
         {
             get { return author; }
         }
+
         public string LibraryReferenceNumber
         {
             get { return libraryReferenceNumber; }
         }
         
-        // Do not remove. This property is being accessed in the UserDashboard Data Template despite the indication of 0 references.
         public string PublicationDate
         {
             get { return publicationDate; }
         }
+
         public BookState AvailabilityStatus
         {
             get { return state; }
         }
+
         public DateTime? DueDate
         {
             get { return dueDate; }
         }
 
+        // Do not remove.
+        // This property is used to access the borrowedBy property in the Data Template despite the indication of 0 references.
         public IEnumerable<User> BorrowedByList
         {
             get
@@ -72,6 +76,7 @@ namespace LibrarySystem
                 return new List<User> { borrowedBy };
             }
         }
+
         public User BorrowedBy
         {
             get {
@@ -87,22 +92,27 @@ namespace LibrarySystem
         {
             state = BookState.Available;
         }
+
         public void SetBookStateToBorrowed()
         {
             state = BookState.Borrowed;
         }
+
         public void SetBookStateToOverdue()
         {
             state = BookState.Overdue;
         }
+
         public void SetBookStateToLost()
         {
             state = BookState.Lost;
         }
+
         public void SetDueDate()
         { 
             dueDate = DateTime.Now.AddDays(14);
         }
+
         public void SetBorrowedBy(User user)
         {
             borrowedBy = user;
@@ -113,6 +123,7 @@ namespace LibrarySystem
         {
             borrowedBy = user;
         }
+
         public void RemoveUserFromBorrowedBy(User user)
         {
             borrowedBy = User.noBorrower;
@@ -130,7 +141,8 @@ namespace LibrarySystem
             return state;
         }
 
-        // This method is used to test and demonstrate the Overdue functionality in the application. It is not used during normal operation.
+        // This method is used to test and demonstrate the Overdue functionality in the application.
+        // It is not used during normal operation.
         public void SetDueDateToPast()
         {
             dueDate = DateTime.Now.AddDays(-14);

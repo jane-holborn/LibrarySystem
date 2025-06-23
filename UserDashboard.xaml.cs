@@ -16,7 +16,7 @@ namespace LibrarySystem
             mainWindow = mainWindowInstance;
         }
 
-        // This button click event is used to carry out a search by title. It calls a method held in the BookController class.
+        // This button click event is used to carry out a search by title.
         private void ButtonSearchByTitle_Click(object sender, RoutedEventArgs e)
         {
             Library.GetInstance().GetBookController().CheckForOverdueBooks();
@@ -27,7 +27,7 @@ namespace LibrarySystem
                 "To improve your search, try a different title, use a keyword search, or try fewer words to broaden your search.";
         }
 
-        // This button click event is used to carry out a search by author. It calls a method held in the BookController class.
+        // This button click event is used to carry out a search by author.
         private void ButtonSearchByAuthor_Click(object sender, RoutedEventArgs e)
         {
             Library.GetInstance().GetBookController().CheckForOverdueBooks();
@@ -37,7 +37,7 @@ namespace LibrarySystem
             TextBlockStatus.Text = "Search complete. Results are displayed above. If no books appear, none matched your search. To improve your search, try a keyword search, or try fewer letters or words to broaden your search.";
         }
 
-        // This button click event is used to carry out a search by keyword. It calls a method held in the BookController class.
+        // This button click event is used to carry out a search by keyword.
         private void ButtonSearchByKeyword_Click(object sender, RoutedEventArgs e)
         {
             Library.GetInstance().GetBookController().CheckForOverdueBooks();
@@ -169,7 +169,7 @@ namespace LibrarySystem
             }
         }
 
-        // This button click even is used to logout of the user dashboard and return to the log in page.
+        // This button click event is used to logout of the user dashboard and return to the log in page.
         private void ButtonLogout_Click(object sender, RoutedEventArgs e)
         {
             Close();

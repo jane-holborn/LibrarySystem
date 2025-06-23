@@ -1,6 +1,4 @@
-﻿using System.Security.Policy;
-
-namespace LibrarySystem.Entities
+﻿namespace LibrarySystem.Entities
 {
     public class User : Person
     {
@@ -28,38 +26,48 @@ namespace LibrarySystem.Entities
         {
             get { return userLibraryNumber; }
         }
+
         public int NumberOfBorrowedBooks
         {
             get { return numberOfBorrowedBooks; }
         }
+
         public List<Book> BorrowedBooks
         {
             get { return borrowedBooks; }
         }
 
-        // Do not remove. This property is being accessed in the UserDashboard Data Template despite the indication of 0 references.
+        // Do not remove.
+        // This property is being accessed in the UserDashboard Data Template despite the indication of 0 references.
         public string FineForDatatemplate
         {
             get { return "$" + fine.ToString("F2"); }
         }
+
         public double Fine
         {
             get { return fine; }
         }
+
+        // This method is used to set the fine amount for the user.
         public void setFine(double fineAmount)
         {
             fine = fineAmount;
         }
+
+        // This method get a list of borrowed books for the user.
         public List<Book>? GetBorrowedBooks()
         {
             return borrowedBooks;
         }
 
-        // Setter methods used to set update the users borrowed book list and the number of books on loan.
+        // This method is used to increase the number of borrowed books for the user.
         public void IncreaseNumberOfBorrowedBooks()
         {
             numberOfBorrowedBooks++;
         }
+
+        // This method is used to decrease the number of borrowed books for the user.
         public void DecreaseNumberOfBorrowedBooks()
         {
             numberOfBorrowedBooks--;
