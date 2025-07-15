@@ -45,7 +45,7 @@ This application has a strong working foundation but with loads of room for grow
 - **Dynamic Updates:** Add dynamic updates to the user dashboard for borrowing and returning books. Add dynamic updates to the librarian dashboard when adding or paying user fines, marking books as lost and returning books.
 
 ## Testing
-The tests for this project are maintained in a separate repository. If you would like to view or run the tests, they can be found in the librarysystem-testing repository here: https://github.com/jane-holborn/librarysystem-testing. Instructions for setting up and running the tests are provided in the README file.
+The tests for this project are maintained in a separate repository. If you would like to view or run the tests, they can be found in the librarysystem-testing repository [here](https://github.com/jane-holborn/librarysystem-testing). Instructions for setting up and running the tests are provided in the README file.
 
 ## Author
 Jane Holborn
